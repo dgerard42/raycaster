@@ -16,6 +16,9 @@
 # include "libft/libft.h"
 # include <stdbool.h>
 
+# define WIN_HI		800
+# define WIN_LEN	1200
+
 typedef	struct	s_env
 {
 	void		*mlx;
@@ -36,10 +39,7 @@ typedef	struct			s_wolf
 	float				pos_y;
 	float				view_x;
 	float				view_y;
-	float				slope;
-	float				y_int;
-	float 				check_x;
-	float				check_y;
+	float				distance;
 }						t_wolf;
 
 #endif
