@@ -14,6 +14,7 @@
 # define WOLF3D_H
 
 # include "libft/libft.h"
+# include "minilibx/mlx.h"
 # include <stdbool.h>
 
 # define WIN_HI		800
@@ -29,7 +30,7 @@ typedef	struct	s_env
 	int			size_line;
 	int			endian;
 	bool		reinit;
-}				t_mlx;
+}				t_env;
 
 typedef	struct			s_wolf
 {

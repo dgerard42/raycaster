@@ -15,8 +15,9 @@ NAME = wolf3d
 FLAGS = -Wall -Werror -Wextra
 
 SRCS = main.c\
+		raycaster.c\
 
-LIBFT = libft/ft_atoi.c\
+LIBFT = libft/ft_power.c\
 
 LIBFTDIR = libft
 
@@ -40,7 +41,7 @@ all: $(NAME)
 
 $(NAME): $(OFILES) $(LIBFTO)
 	@make -C libs/minilibx/
-	@gcc $(CFLAGS) -o $(OFILES) $(LIBFTO) $(FRAMEWORKS) 
+	@gcc $(CFLAGS) -o $(OFILES) $(LIBFTO) $(FRAMEWORKS)
 	//took out a $@ before the $(OFILES)
 	@echo "\033[32m[wolf3d created ( ͡° ͜ʖ ͡°)]\033[0m"
 
