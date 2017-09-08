@@ -6,7 +6,7 @@
 #    By: dgerard <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/08/27 19:15:03 by dgerard           #+#    #+#              #
-#    Updated: 2017/08/28 11:29:05 by dgerard          ###   ########.fr        #
+#    Updated: 2017/09/05 22:06:05 by dgerard          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -40,7 +40,7 @@ $(ODIR)/%.o: %.c
 all: $(NAME)
 
 $(NAME): $(OFILES) $(LIBFTO)
-	@make -C libs/minilibx/
+	@make -C minilibx/
 	@gcc $(CFLAGS) -o $(OFILES) $(LIBFTO) $(FRAMEWORKS)
 	//took out a $@ before the $(OFILES)
 	@echo "\033[32m[wolf3d created ( ͡° ͜ʖ ͡°)]\033[0m"
@@ -54,7 +54,7 @@ clean:
 	@rm -f $(LIBFT0)
 	@rm -rf $(ODIR)
 	@echo "\033[31m[.o files deleted (╯°□°）╯︵ ┻━┻ ]\033[0m"
-	@make -C libs/minilibx/ clean
+	@make -C minilibx/ clean
 
 fclean: clean
 	@/bin/rm -f rm $(NAME)

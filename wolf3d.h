@@ -16,6 +16,7 @@
 # include "libft/libft.h"
 # include "minilibx/mlx.h"
 # include <stdbool.h>
+# include <math.h>
 
 # define WIN_HI		800
 # define WIN_LEN	1200
@@ -26,7 +27,7 @@ typedef	struct	s_env
 	void		*window;
 	void		*image;
 	int			*pixels;
-	int			*bits_per_pixel;
+	int			bits_per_pixel;
 	int			size_line;
 	int			endian;
 	bool		reinit;
@@ -35,12 +36,14 @@ typedef	struct	s_env
 typedef	struct			s_wolf
 {
 	int					map_choice;
-	unsigned long long 	*map;
+	unsigned long		*map;
 	float				pos_x;
 	float				pos_y;
 	float				view_x;
 	float				view_y;
 	float				distance;
 }						t_wolf;
+
+void				raycaster(t_env *env, t_wolf *wolf);
 
 #endif

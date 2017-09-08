@@ -10,6 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "wolf3d.h"
+
 void				shoot_ray(t_wolf *wolf, float slope, float y_int)
 {
 	float	wall_x;
@@ -37,7 +39,7 @@ void				shoot_ray(t_wolf *wolf, float slope, float y_int)
 	wolf->distance = sqrt(ft_power(wall_x - wolf->pos_x, 2) + ft_power(wall_y - wolf->pos_y, 2));
 }
 
-void				draw_wall(t_env *env, t_wolf *wolf, int wall_hi)
+void				draw_wall(t_env *env, t_wolf *wolf)
 {
 	int y;
 	int	sky;
@@ -47,11 +49,11 @@ void				draw_wall(t_env *env, t_wolf *wolf, int wall_hi)
 	wall_hi = WIN_HI - ((int)wolf->distance * 200);
 	sky = wall_hi / 2;
 	while (y < sky)
-		env->pixels[wolf->view_x + (y++ * WIN_LEN)] = 0x010022;
+		env->pixels[(int)wolf->view_x + (y++ * WIN_LEN)] = 0x010022;
 	while (y - sky < wall_hi)
-		env->pixels[wolf->view_x + (y++ * WIN_LEN)] = 0x004212;
-	while (y < WIN HI - 1)
-		env->pixels[wolf->view_x + (y++ * WIN_LEN)] = 0x241400;
+		env->pixels[(int)wolf->view_x + (y++ * WIN_LEN)] = 0x004212;
+	while (y < WIN_HI - 1)
+		env->pixels[(int)wolf->view_x + (y++ * WIN_LEN)] = 0x241400;
 }
 
 void				initialize(t_env * env, t_wolf *wolf)
@@ -71,17 +73,16 @@ void				raycaster(t_env *env, t_wolf *wolf)
 	int		x;
 	float	slope;
 	float	y_int;
-	int		wall_size;
 
 	initialize(env, wolf);
 	slope = (wolf->view_y - wolf->pos_y) / (wolf->view_x - wolf->pos_x);
 	y_int = -(slope * wolf->pos_x) + wolf->pos_y;
-	wolf->view_x = view_x_tmp - (view_x_tmp / 2);
+	wolf->view_x = wolf->view_x - (wolf->view_x / 2);
 	while (x++ < (WIN_LEN - 1))
 	{
 		shoot_ray(wolf, slope, y_int);
 		wolf->view_x++;
-		draw_wall(env, wolf, wall_hi);
+		draw_wall(env, wolf);
 	}
 	wolf->view_x = wolf->view_x * 2;
 }
