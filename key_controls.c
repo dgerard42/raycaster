@@ -12,13 +12,11 @@
 
 #include "fractol.h"
 
-void				exit_fractol(t_env *env)
+void				exit_wolf3d(t_env *env, t_wolf *wolf)
 {
-	if (env->fractal == 0 || env->fractal == 1)
-		mlx_destroy_image(env->mlx, env->image);
+	mlx_destroy_image(env->mlx, env->image);
 	mlx_destroy_window(env->mlx, env->window);
-	if (env->fractal == 2)
-		ft_memdel((void **)&env->pent);
+	ft_memdel((void **)&wolf->map);
 	exit(0);
 }
 

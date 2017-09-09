@@ -6,7 +6,7 @@
 #    By: dgerard <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/08/27 19:15:03 by dgerard           #+#    #+#              #
-#    Updated: 2017/09/05 22:06:05 by dgerard          ###   ########.fr        #
+#    Updated: 2017/09/08 20:13:25 by dgerard          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,6 +18,9 @@ SRCS = main.c\
 		raycaster.c\
 
 LIBFT = libft/ft_power.c\
+		libft/ft_atoi.c\
+
+LIBMLX = minilibx/libmlx.a
 
 LIBFTDIR = libft
 
@@ -41,8 +44,7 @@ all: $(NAME)
 
 $(NAME): $(OFILES) $(LIBFTO)
 	@make -C minilibx/
-	@gcc $(CFLAGS) -o $(OFILES) $(LIBFTO) $(FRAMEWORKS)
-	//took out a $@ before the $(OFILES)
+	@gcc $(CFLAGS) -o $@ $(OFILES) $(LIBFTO) $(FRAMEWORKS) $(LIBMLX)
 	@echo "\033[32m[wolf3d created ( ͡° ͜ʖ ͡°)]\033[0m"
 
 $(OFILES): | $(ODIR)
