@@ -47,13 +47,24 @@ void				draw_wall(t_env *env, t_wolf *wolf)
 
 	y = 0;
 	wall_hi = WIN_HI - ((int)wolf->distance * 200);
-	sky = wall_hi / 2;
+	sky = (WIN_HI - wall_hi) / 2;
+	ft_printf("seghere3\n");
 	while (y < sky)
+	{
 		env->pixels[(int)wolf->view_x + (y++ * WIN_LEN)] = 0x010022;
-	while (y - sky < wall_hi)
+		// printf("seghere4\n");
+	}
+	while (y + sky < WIN_HI)
+	{
 		env->pixels[(int)wolf->view_x + (y++ * WIN_LEN)] = 0x004212;
+		printf("wolf->distance%f\n", wolf->distance);
+		// printf("seghere5\n");
+	}
 	while (y < WIN_HI - 1)
+	{
 		env->pixels[(int)wolf->view_x + (y++ * WIN_LEN)] = 0x241400;
+		// printf("seghere6\n");
+	}
 }
 
 void				initialize(t_env * env, t_wolf *wolf)
@@ -75,12 +86,15 @@ void				raycaster(t_env *env, t_wolf *wolf)
 	float	y_int;
 
 	initialize(env, wolf);
+	ft_printf("seghere0\n");
 	slope = (wolf->view_y - wolf->pos_y) / (wolf->view_x - wolf->pos_x);
 	y_int = -(slope * wolf->pos_x) + wolf->pos_y;
 	wolf->view_x = wolf->view_x - (wolf->view_x / 2);
 	while (x++ < (WIN_LEN - 1))
 	{
+		// printf("seghere1\n");
 		shoot_ray(wolf, slope, y_int);
+		// printf("seghere2\n");
 		wolf->view_x++;
 		draw_wall(env, wolf);
 	}

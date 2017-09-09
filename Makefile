@@ -6,7 +6,7 @@
 #    By: dgerard <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/08/27 19:15:03 by dgerard           #+#    #+#              #
-#    Updated: 2017/09/08 20:13:25 by dgerard          ###   ########.fr        #
+#    Updated: 2017/09/08 20:44:05 by dgerard          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -44,7 +44,7 @@ all: $(NAME)
 
 $(NAME): $(OFILES) $(LIBFTO)
 	@make -C minilibx/
-	@gcc $(CFLAGS) -o $@ $(OFILES) $(LIBFTO) $(FRAMEWORKS) $(LIBMLX)
+	@gcc $(CFLAGS) -o $@ $(OFILES) $(LIBFTO) $(FRAMEWORKS) $(LIBMLX) libftprintf.a
 	@echo "\033[32m[wolf3d created ( ͡° ͜ʖ ͡°)]\033[0m"
 
 $(OFILES): | $(ODIR)

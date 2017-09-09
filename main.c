@@ -16,6 +16,8 @@ void			reinit(t_env *env, t_wolf *wolf)
 {
 	if (env->reinit == true)
 		mlx_destroy_image(env->mlx, env->image);
+	else
+		env->window = mlx_new_window(env->mlx, WIN_LEN, WIN_HI, "escape the maze");
 	env->image = mlx_new_image(env->mlx, WIN_HI, WIN_LEN);
 	env->pixels = (int *)mlx_get_data_addr(env->image, &env->bits_per_pixel,
 		&env->size_line, &env->endian);

@@ -17,6 +17,7 @@
 # include "minilibx/mlx.h"
 # include <stdbool.h>
 # include <math.h>
+# include <stdio.h> //rm this at the end
 
 # define WIN_HI		800
 # define WIN_LEN	1200
@@ -45,5 +46,7 @@ typedef	struct			s_wolf
 }						t_wolf;
 
 void				raycaster(t_env *env, t_wolf *wolf);
+//remember to rm this prototype VV
+int					ft_printf(const char *format, ...);
 
 #endif
