@@ -99,12 +99,10 @@ void				initialize(t_env * env, t_wolf *wolf)
 void				raycaster(t_env *env, t_wolf *wolf)
 {
 	int		x;
-	float	slope;
-	float	y_int;
 
 	initialize(env, wolf);
-	slope = (wolf->view_y - wolf->pos_y) / (wolf->view_x - wolf->pos_x);
-	y_int = -(slope * wolf->pos_x) + wolf->pos_y;
+	wolf->slope = (wolf->view_y - wolf->pos_y) / (wolf->view_x - wolf->pos_x);
+	wolf->y_int = -(slope * wolf->pos_x) + wolf->pos_y;
 	wolf->view_x = wolf->view_x - (WIN_LEN / 2);
 	while (wolf->view_x < (WIN_LEN - 1))
 	{

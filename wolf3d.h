@@ -42,6 +42,8 @@ typedef	struct			s_wolf
 	float				pos_y;
 	float				view_x;
 	float				view_y;
+	float				slope;
+	float				y_int;
 	float				distance;
 }						t_wolf;
 
