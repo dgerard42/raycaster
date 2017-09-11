@@ -18,7 +18,7 @@ void			reinit(t_env *env, t_wolf *wolf)
 		mlx_destroy_image(env->mlx, env->image);
 	else
 		env->window = mlx_new_window(env->mlx, WIN_LEN, WIN_HI, "escape the maze");
-	env->image = mlx_new_image(env->mlx, WIN_HI, WIN_LEN);
+	env->image = mlx_new_image(env->mlx, WIN_LEN, WIN_HI);
 	env->pixels = (int *)mlx_get_data_addr(env->image, &env->bits_per_pixel,
 		&env->size_line, &env->endian);
 	raycaster(env, wolf);
@@ -27,6 +27,7 @@ void			reinit(t_env *env, t_wolf *wolf)
 
 void		map_0(t_wolf *wolf)
 {
+	//17
 	wolf->map = (unsigned long *)malloc(sizeof(unsigned long) * 15);
 	wolf->map[0] = 0b11111111111111111;
 	wolf->map[1] = 0b10001000100010001;
@@ -47,6 +48,7 @@ void		map_0(t_wolf *wolf)
 
 void		map_1(t_wolf *wolf)
 {
+	//18
 	wolf->map = (unsigned long *)malloc(sizeof(unsigned long) * 15);
 	wolf->map[0] = 0b111111111111111111;
 	wolf->map[1] = 0b101100000010000001;
@@ -67,6 +69,7 @@ void		map_1(t_wolf *wolf)
 
 void		map_2(t_wolf *wolf)
 {
+	//30
 	wolf->map[0] = 0b11111111111111111111111111111111;
 	wolf->map[1] = 0b10000110000010000100000010000111;
 	wolf->map[2] = 0b10110000111011010110111010110111;
@@ -95,11 +98,11 @@ int			main(int argc, char **argv)
 	wolf.map_choice = ft_atoi(argv[1]);
 	//implement parameter managment and a menu later, this is v sloppy open to segfaults
 	wolf.map = (unsigned long *)malloc(sizeof(unsigned long) * 15);
-	if (wolf.map_choice == 0)
+	if (wolf.map_choice == 16)
 		map_0(&wolf);
-	else if (wolf.map_choice == 1)
+	else if (wolf.map_choice == 17)
 		map_1(&wolf);
-	else if (wolf.map_choice == 2)
+	else if (wolf.map_choice == 29)
 		map_2(&wolf);
 	env.reinit = false;
 	reinit(&env, &wolf);

@@ -69,13 +69,30 @@ void				shoot_ray(t_env *env, t_wolf *wolf, float slope, float y_int)
 
 void				initialize(t_env * env, t_wolf *wolf)
 {
+	int x;
+	int y;
+
+	y = 0;
 	if (env->reinit == false)
 	{
-		wolf->pos_x = 1;
-		wolf->pos_y = 1;
-		// make sure that if its a blocked area that you can't spawn there
-		wolf->view_x = wolf->pos_x + 2;
-		wolf->view_y = wolf->pos_y + 2;
+		while (y < 15)
+		{
+			x = 0;
+			while (wolf->map[y] & 0b1 << x && x < wolf->map_choice)
+			{
+				ft_printf("%d, %d\n", y, x);
+				if (!(wolf->map[y] & 0b1<< x))
+					break;
+				x++;
+			}
+			if (!(wolf->map[y] & 0b1<< x))
+				break;
+			y++;
+		}
+		wolf->pos_x = (float)x;
+		wolf->pos_y = (float)y;
+		wolf->view_x = wolf->pos_x + 1;
+		wolf->view_y = wolf->pos_y + 1;
 	}
 }
 
@@ -88,12 +105,12 @@ void				raycaster(t_env *env, t_wolf *wolf)
 	initialize(env, wolf);
 	slope = (wolf->view_y - wolf->pos_y) / (wolf->view_x - wolf->pos_x);
 	y_int = -(slope * wolf->pos_x) + wolf->pos_y;
-	wolf->view_x = wolf->view_x - (wolf->view_x / 2);
-//	while (x++ < (WIN_LEN - 1))
-//	{
+	wolf->view_x = wolf->view_x - (WIN_LEN / 2);
+	while (wolf->view_x < (WIN_LEN - 1))
+	{
 		shoot_ray(env, wolf, slope, y_int);
 //		wolf->view_x++;
 //		draw_wall(env, wolf);
-//	}
-	wolf->view_x = wolf->view_x * 2;
+	}
+	wolf->view_x += (WIN_LEN / 2);
 }
