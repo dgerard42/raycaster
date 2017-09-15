@@ -6,7 +6,7 @@
 #    By: dgerard <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/08/27 19:15:03 by dgerard           #+#    #+#              #
-#    Updated: 2017/09/08 20:44:05 by dgerard          ###   ########.fr        #
+#    Updated: 2017/09/15 15:22:26 by dgerard          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,9 +16,11 @@ FLAGS = -Wall -Werror -Wextra
 
 SRCS = main.c\
 		raycaster.c\
+		key_controls.c\
 
 LIBFT = libft/ft_power.c\
 		libft/ft_atoi.c\
+		libft/ft_memdel.c\
 
 LIBMLX = minilibx/libmlx.a
 

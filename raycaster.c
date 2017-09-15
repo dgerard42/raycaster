@@ -74,33 +74,31 @@ void				initialize(t_env * env, t_wolf *wolf)
 	int y;
 
 	y = 0;
-	if (env->reinit == false)
+	while (y < 15)
 	{
-		while (y < 15)
+		x = 0;
+		while (wolf->map[y] & 0b1 << x && x < wolf->map_choice)
 		{
-			x = 0;
-			while (wolf->map[y] & 0b1 << x && x < wolf->map_choice)
-			{
-				if (!(wolf->map[y] & 0b1<< x))
-					break;
-				x++;
-			}
 			if (!(wolf->map[y] & 0b1<< x))
 				break;
-			y++;
+			x++;
 		}
-		wolf->pos_x = (float)x;
-		wolf->pos_y = (float)y;
-		wolf->view_x = wolf->pos_x + 1;
-		wolf->view_y = wolf->pos_y + 1;
+		if (!(wolf->map[y] & 0b1<< x))
+			break;
+		y++;
 	}
+	wolf->pos_x = (float)x;
+	wolf->pos_y = (float)y;
+	wolf->view_x = wolf->pos_x + 1;
+	wolf->view_y = wolf->pos_y + 1;
 }
 
 void				raycaster(t_env *env, t_wolf *wolf)
 {
 	int		x;
 
-	initialize(env, wolf);
+	if (env->reinit == false)
+		initialize(env, wolf);
 	wolf->slope = (wolf->view_y - wolf->pos_y) / (wolf->view_x - wolf->pos_x);
 	wolf->y_int = -(wolf->slope * wolf->pos_x) + wolf->pos_y;
 	wolf->view_x = wolf->view_x - (WIN_LEN / 2);
@@ -111,5 +109,5 @@ void				raycaster(t_env *env, t_wolf *wolf)
 //		draw_wall(env, wolf);
 	}
 	wolf->view_x += (WIN_LEN / 2);
-	// printf("wolf->view_x = %f\n", wolf->view_x);
+	printf("wolf->view_x = %f\n", wolf->view_x);
 }

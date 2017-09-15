@@ -22,6 +22,7 @@ void			reinit(t_env *env, t_wolf *wolf)
 	env->pixels = (int *)mlx_get_data_addr(env->image, &env->bits_per_pixel,
 		&env->size_line, &env->endian);
 	raycaster(env, wolf);
+	printf("here\n");
 	mlx_put_image_to_window(env->mlx, env->window, env->image, 0, 0);
 }
 
@@ -96,6 +97,7 @@ int			main(int argc, char **argv)
 		return(0);
 	env.mlx = mlx_init();
 	wolf.map_choice = ft_atoi(argv[1]);
+	env.wolf_mem = &wolf;
 	//implement parameter managment and a menu later, this is v sloppy open to segfaults
 	wolf.map = (unsigned long *)malloc(sizeof(unsigned long) * 15);
 	if (wolf.map_choice == 16)

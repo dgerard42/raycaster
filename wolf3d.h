@@ -22,9 +22,9 @@
 # define WIN_HI		800
 # define WIN_LEN	1200
 
-# define KEY_ESC
-# define KEY_W
-# define KEY_D
+# define KEY_ESC	53
+# define KEY_W		13
+# define KEY_S		1
 
 typedef	struct	s_env
 {
@@ -36,6 +36,7 @@ typedef	struct	s_env
 	int			size_line;
 	int			endian;
 	bool		reinit;
+	void		*wolf_mem;
 }				t_env;
 
 typedef	struct			s_wolf
@@ -55,5 +56,6 @@ void				raycaster(t_env *env, t_wolf *wolf);
 //remember to rm this prototype VV
 int					ft_printf(const char *format, ...);
 int					key_controls(int keycode, t_env *env);
+void				reinit(t_env *env, t_wolf *wolf);
 
 #endif
