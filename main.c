@@ -106,9 +106,10 @@ int			main(int argc, char **argv)
 		map_2(&wolf);
 	env.reinit = false;
 	reinit(&env, &wolf);
-	// mlx_hook(env.window, 2, 0, key_controls, (void *)&env);
+	mlx_hook(env.window, 2, 0, key_controls, (void *)&env);
 	// mlx_mouse_hook(env.window, &mouse_controls, (void *)&env);
 	// mlx_hook(env.window, 6, 0, another_ft, (void *)&env);
+	//printf("wolf->view_x = %f\n", wolf.view_x);
 	mlx_loop(env.mlx);
 	return (0);
 }

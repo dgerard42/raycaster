@@ -32,10 +32,10 @@ void				movement_controls(t_env *env, int keycode)
 		pos_x += 0.1 * c0s;
 		pos_y += 0.1 * s1n;
 	}
-	if (keycode == KEY_A)
-		env->x_displace -= (env->scale < 15) ? 1 : (0.05 / (env->scale / 1000));
-	if (keycode == KEY_S)
-		env->y_displace += (env->scale < 15) ? 1 : (0.05 / (env->scale / 1000));
+	// if (keycode == KEY_A)
+	// 	env->x_displace -= (env->scale < 15) ? 1 : (0.05 / (env->scale / 1000));
+	// if (keycode == KEY_S)
+	// 	env->y_displace += (env->scale < 15) ? 1 : (0.05 / (env->scale / 1000));
 	if (keycode == KEY_D)
 	{
 		pos_x -= 0.1 * c0s;
