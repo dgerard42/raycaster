@@ -53,9 +53,9 @@ typedef	struct			s_wolf
 }						t_wolf;
 
 void				raycaster(t_env *env, t_wolf *wolf);
-//remember to rm this prototype VV
-int					ft_printf(const char *format, ...);
 int					key_controls(int keycode, t_env *env);
 void				reinit(t_env *env, t_wolf *wolf);
+//remember to rm this prototype VV
+int					ft_printf(const char *format, ...);
 
 #endif

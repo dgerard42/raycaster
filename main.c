@@ -22,14 +22,15 @@ void			reinit(t_env *env, t_wolf *wolf)
 	env->pixels = (int *)mlx_get_data_addr(env->image, &env->bits_per_pixel,
 		&env->size_line, &env->endian);
 	raycaster(env, wolf);
-	printf("here\n");
+	printf("here before put img to window\n");
 	mlx_put_image_to_window(env->mlx, env->window, env->image, 0, 0);
 }
 
 void		map_0(t_wolf *wolf)
 {
-	//17
-	wolf->map = (unsigned long *)malloc(sizeof(unsigned long) * 15);
+	printf("map 0!!\n");
+	wolf->map_choice = 16;
+//	wolf->map = (unsigned long *)malloc(sizeof(unsigned long) * 15);
 	wolf->map[0] = 0b11111111111111111;
 	wolf->map[1] = 0b10001000100010001;
 	wolf->map[2] = 0b10000000000000001;
@@ -49,8 +50,9 @@ void		map_0(t_wolf *wolf)
 
 void		map_1(t_wolf *wolf)
 {
-	//18
-	wolf->map = (unsigned long *)malloc(sizeof(unsigned long) * 15);
+	printf("map 1!!\n");
+	wolf->map_choice = 17;
+//	wolf->map = (unsigned long *)malloc(sizeof(unsigned long) * 15);
 	wolf->map[0] = 0b111111111111111111;
 	wolf->map[1] = 0b101100000010000001;
 	wolf->map[2] = 0b100001011000101101;
@@ -70,7 +72,8 @@ void		map_1(t_wolf *wolf)
 
 void		map_2(t_wolf *wolf)
 {
-	//30
+	printf("map 2!!\n");
+	wolf->map_choice = 29;
 	wolf->map[0] = 0b11111111111111111111111111111111;
 	wolf->map[1] = 0b10000110000010000100000010000111;
 	wolf->map[2] = 0b10110000111011010110111010110111;
@@ -100,11 +103,11 @@ int			main(int argc, char **argv)
 	env.wolf_mem = &wolf;
 	//implement parameter managment and a menu later, this is v sloppy open to segfaults
 	wolf.map = (unsigned long *)malloc(sizeof(unsigned long) * 15);
-	if (wolf.map_choice == 16)
+	if (wolf.map_choice == 0)
 		map_0(&wolf);
-	else if (wolf.map_choice == 17)
+	else if (wolf.map_choice == 1)
 		map_1(&wolf);
-	else if (wolf.map_choice == 29)
+	else if (wolf.map_choice == 2)
 		map_2(&wolf);
 	env.reinit = false;
 	reinit(&env, &wolf);
