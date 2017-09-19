@@ -47,21 +47,29 @@ void				shoot_ray(t_env *env, t_wolf *wolf)
 
 	wall_x = wolf->pos_x;
 	wall_y = wolf->pos_y;
+	printf("wat\n");
 	while (1)
 	{
 		if (((int)wall_y + 1) - wolf->pos_y < ((int)wall_x + 1) - wolf->pos_x)
 		{
 			wall_y = (int)wall_y + 1;
 			wall_x = (wall_y - wolf->y_int) / wolf->slope;
+			printf("the\n");
 			if (wolf->map[(int)wall_y] && wolf->map[(int)wall_y] & (0b1 << (int)wall_x))
 				break;
 		}
 		else
 		{
 			wall_x = (int)wall_x + 1;
+			printf("int(wall_x)%f\n", wall_x);
+			printf("wolf->slope%f\n", wolf->slope);
+			printf("yint%f\n", wolf->y_int);
+			printf("int(wall_y)%d\n", (int)wall_y);
 			wall_y = (wolf->slope * wall_x) + wolf->y_int;
+			printf("int(wall_y)%d\n", (int)wall_y);
 			if (wolf->map[(int)wall_y] && wolf->map[(int)wall_y] & (0b1 << (int)wall_x))
 				break;
+			printf("fug\n");
 		}
 	}
 	wolf->distance = sqrt(ft_power(wall_x - wolf->pos_x, 2) + ft_power(wall_y - wolf->pos_y, 2));

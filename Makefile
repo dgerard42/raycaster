@@ -6,7 +6,7 @@
 #    By: dgerard <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/08/27 19:15:03 by dgerard           #+#    #+#              #
-#    Updated: 2017/09/15 15:22:26 by dgerard          ###   ########.fr        #
+#    Updated: 2017/09/18 20:17:29 by dgerard          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -55,7 +55,7 @@ $(ODIR):
 	@mkdir $(ODIR)
 
 clean:
-	@rm -f $(LIBFT0)
+	@rm -f $(LIBFTO)
 	@rm -rf $(ODIR)
 	@echo "\033[31m[.o files deleted (╯°□°）╯︵ ┻━┻ ]\033[0m"
 	@make -C minilibx/ clean
