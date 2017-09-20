@@ -30,23 +30,23 @@ void				movement_controls(t_env *env, int keycode)
 	{
 		c0s = 1 / sqrt(1 + pow(((t_wolf *)env->wolf_mem)->slope, 2));
 		s1n = ((t_wolf *)env->wolf_mem)->slope / sqrt(1 + pow(((t_wolf *)env->wolf_mem)->slope, 2));
-		// ((t_wolf *)env->wolf_mem)->view_x -= ((t_wolf *)env->wolf_mem)->pos_x;//make this plus whatever angle ur at
-		// ((t_wolf *)env->wolf_mem)->view_y -= ((t_wolf *)env->wolf_mem)->pos_y;
-	}
-	if (keycode == KEY_W)
-	{
-		((t_wolf *)env->wolf_mem)->pos_x += 0.001 * c0s;
-		((t_wolf *)env->wolf_mem)->pos_y += 0.001 * s1n;
-		printf("%f, %f\n", ((t_wolf *)env->wolf_mem)->pos_x, ((t_wolf *)env->wolf_mem)->pos_y);
-		((t_wolf *)env->wolf_mem)->view_x = ((t_wolf *)env->wolf_mem)->pos_x + 1;//make this plus whatever angle ur at
-		((t_wolf *)env->wolf_mem)->view_y = ((t_wolf *)env->wolf_mem)->pos_y + 1;
+		((t_wolf *)env->wolf_mem)->view_x -= ((t_wolf *)env->wolf_mem)->pos_x;//make this plus whatever angle ur at
+		((t_wolf *)env->wolf_mem)->view_y -= ((t_wolf *)env->wolf_mem)->pos_y;
 	}
 	if (keycode == KEY_S)
 	{
+		((t_wolf *)env->wolf_mem)->pos_x += 0.01 * c0s;
+		((t_wolf *)env->wolf_mem)->pos_y += 0.01 * s1n;
+		// printf("%f, %f\n", ((t_wolf *)env->wolf_mem)->pos_x, ((t_wolf *)env->wolf_mem)->pos_y);
+		((t_wolf *)env->wolf_mem)->view_x += ((t_wolf *)env->wolf_mem)->pos_x;//make this plus whatever angle ur at
+		((t_wolf *)env->wolf_mem)->view_y += ((t_wolf *)env->wolf_mem)->pos_y;
+	}
+	if (keycode == KEY_W)
+	{
 		((t_wolf *)env->wolf_mem)->pos_x -= 0.001 * c0s;
 		((t_wolf *)env->wolf_mem)->pos_y -= 0.001 * s1n;
-		((t_wolf *)env->wolf_mem)->view_x = ((t_wolf *)env->wolf_mem)->pos_x + 1;
-		((t_wolf *)env->wolf_mem)->view_y = ((t_wolf *)env->wolf_mem)->pos_y + 1;
+		((t_wolf *)env->wolf_mem)->view_x += ((t_wolf *)env->wolf_mem)->pos_x;
+		((t_wolf *)env->wolf_mem)->view_y += ((t_wolf *)env->wolf_mem)->pos_y;
 	}
 	// if (keycode == KEY_A)
 	// {
