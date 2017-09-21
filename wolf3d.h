@@ -50,6 +50,8 @@ typedef	struct			s_wolf
 	float				slope;
 	float				y_int;
 	float				distance;
+	int					inc_x;
+	int					inc_y;
 }						t_wolf;
 
 void				raycaster(t_env *env, t_wolf *wolf);

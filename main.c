@@ -23,7 +23,7 @@ void			reinit(t_env *env, t_wolf *wolf)
 		&env->size_line, &env->endian);
 	// printf("starting seg\n");
 	raycaster(env, wolf);
-	// printf("here before put img to window\n");
+	printf("here before put img to window\n");
 	mlx_put_image_to_window(env->mlx, env->window, env->image, 0, 0);
 }
 
@@ -47,6 +47,7 @@ void		map_0(t_wolf *wolf)
 	wolf->map[12] = 0b10000000000000001;
 	wolf->map[13] = 0b10001000100010001;
 	wolf->map[14] = 0b11111111111111111;
+	wolf->map[15] = 0;
 }
 
 void		map_1(t_wolf *wolf)
@@ -69,6 +70,7 @@ void		map_1(t_wolf *wolf)
 	wolf->map[12] = 0b101110001000111111;
 	wolf->map[13] = 0b100011011110000001;
 	wolf->map[14] = 0b111111111111111111;
+	wolf->map[15] = 0;
 }
 
 void		map_2(t_wolf *wolf)
@@ -90,6 +92,7 @@ void		map_2(t_wolf *wolf)
 	wolf->map[12] = 0b10111010011101101100101110111001;
 	wolf->map[13] = 0b11100011010000001110001000110001;
 	wolf->map[14] = 0b11111111111111111111111111111111;
+	wolf->map[15] = 0;
 }
 
 int			main(int argc, char **argv)
@@ -103,7 +106,7 @@ int			main(int argc, char **argv)
 	wolf.map_choice = ft_atoi(argv[1]);
 	env.wolf_mem = &wolf;
 	//implement parameter managment and a menu later, this is v sloppy open to segfaults
-	wolf.map = (unsigned long *)malloc(sizeof(unsigned long) * 15);
+	wolf.map = (unsigned long *)malloc(sizeof(unsigned long) * 16);
 	if (wolf.map_choice == 0)
 		map_0(&wolf);
 	else if (wolf.map_choice == 1)
