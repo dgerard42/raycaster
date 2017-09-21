@@ -21,9 +21,9 @@ void			reinit(t_env *env, t_wolf *wolf)
 	env->image = mlx_new_image(env->mlx, WIN_LEN, WIN_HI);
 	env->pixels = (int *)mlx_get_data_addr(env->image, &env->bits_per_pixel,
 		&env->size_line, &env->endian);
-	printf("starting seg\n");
+	// printf("starting seg\n");
 	raycaster(env, wolf);
-	printf("here before put img to window\n");
+	// printf("here before put img to window\n");
 	mlx_put_image_to_window(env->mlx, env->window, env->image, 0, 0);
 }
 
@@ -112,7 +112,7 @@ int			main(int argc, char **argv)
 		map_2(&wolf);
 	env.reinit = false;
 	reinit(&env, &wolf);
-	mlx_hook(env.window, 2, 0, key_controls, (void *)&env);
+	// mlx_hook(env.window, 2, 0, key_controls, (void *)&env);
 	// mlx_mouse_hook(env.window, &mouse_controls, (void *)&env);
 	// mlx_hook(env.window, 6, 0, another_ft, (void *)&env);
 	//printf("wolf->view_x = %f\n", wolf.view_x);

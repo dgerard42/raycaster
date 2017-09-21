@@ -21,7 +21,7 @@ void				draw_wall(t_env *env, t_wolf *wolf, int x)
 	y = 0;
 	wall_hi = WIN_HI - ((int)wolf->distance * 100);
 	sky = (WIN_HI - wall_hi) / 2;
-	ft_printf("sky = %d\n", sky);
+	// ft_printf("sky = %d\n", sky);
 	while (y < sky)
 	{
 		env->pixels[x + (y++ * WIN_LEN)] = 0x000000;
@@ -39,6 +39,7 @@ void				draw_wall(t_env *env, t_wolf *wolf, int x)
 		// ft_printf("seghere6\n");
 	}
 	// printf("wolf->view_x = %f, y = %d\n", wolf->view_x, y);
+	// printf("line of wall drawn\n");
 }
 
 void				shoot_ray(t_env *env, t_wolf *wolf)
@@ -108,13 +109,18 @@ void				initialize(t_env * env, t_wolf *wolf)
 void				raycaster(t_env *env, t_wolf *wolf)
 {
 	int		x;
+	float	view_inc;
 
 	x = 0;
+	view_inc = (float)4 / ((float)WIN_LEN - (float)1 / (float)2);
 	if (env->reinit == false)
 		initialize(env, wolf);
+	printf("%f\n", view_inc);
+	wolf->view_x -= view_inc * ((WIN_HI - 1) / 2);
 	while (x < (WIN_LEN - 1))
 	{
-		ft_printf("seg0\n");
+		printf("wolf->view_x%f\n", wolf->view_x);
+		// ft_printf("seg0\n");
 		wolf->slope = (wolf->view_y - wolf->pos_y) / (wolf->view_x - wolf->pos_x);
 		// printf("posy%f\n", wolf->pos_y);
 		// printf("posx%f\n", wolf->pos_x);
@@ -123,13 +129,13 @@ void				raycaster(t_env *env, t_wolf *wolf)
 		// printf("viewy - posy = %f\n", wolf->view_y - wolf->pos_y);
 		// printf("viewx - posx = %f\n", wolf->view_x - wolf->pos_x);
 		wolf->y_int = -(wolf->slope * wolf->pos_x) + wolf->pos_y;
-		ft_printf("seg2\n");
+		// ft_printf("seg2\n");
 		shoot_ray(env, wolf);
-		ft_printf("seg3\n");
+		// ft_printf("seg3\n");
 		draw_wall(env, wolf, x);
-		ft_printf("%d\n", x);
+		// ft_printf("%d\n", x);
 		x++;
-		wolf->view_x += 2 / (WIN_LEN - 1);
+		wolf->view_x += view_inc;
 	}
 	wolf->view_x -= 1;
 	// printf("wolf->view_x = %f\n", wolf->view_x);
