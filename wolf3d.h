@@ -25,6 +25,8 @@
 # define KEY_ESC	53
 # define KEY_W		13
 # define KEY_S		1
+# define KEY_A		0
+# define KEY_D		2
 
 typedef	struct	s_env
 {
@@ -48,6 +50,7 @@ typedef	struct			s_wolf
 	float				view_x;
 	float				view_y;
 	float				slope;
+	float				inv_slope;
 	float				y_int;
 	float				distance;
 	int					inc_x;

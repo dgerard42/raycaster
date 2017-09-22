@@ -33,21 +33,37 @@ void		map_0(t_wolf *wolf)
 	wolf->map_choice = 16;
 //	wolf->map = (unsigned long *)malloc(sizeof(unsigned long) * 15);
 	wolf->map[0] = 0b11111111111111111;
-	wolf->map[1] = 0b10001000100010001;
+	wolf->map[1] = 0b10000000000000001;
 	wolf->map[2] = 0b10000000000000001;
 	wolf->map[3] = 0b10000000000000001;
-	wolf->map[4] = 0b10000000100000001;
-	wolf->map[5] = 0b11000001110000011;
-	wolf->map[6] = 0b10000011111000001;
-	wolf->map[7] = 0b10000001110000001;
-	wolf->map[8] = 0b10000011111000001;
-	wolf->map[9] = 0b11000001110000011;
-	wolf->map[10] = 0b10000000100000001;
+	wolf->map[4] = 0b10000000000000001;
+	wolf->map[5] = 0b10000000000000001;
+	wolf->map[6] = 0b10000000000000001;
+	wolf->map[7] = 0b10000000000000001;
+	wolf->map[8] = 0b10000000000000001;
+	wolf->map[9] = 0b10000000000000001;
+	wolf->map[10] = 0b10000000000000001;
 	wolf->map[11] = 0b10000000000000001;
 	wolf->map[12] = 0b10000000000000001;
-	wolf->map[13] = 0b10001000100010001;
+	wolf->map[13] = 0b10000000000000001;
 	wolf->map[14] = 0b11111111111111111;
 	wolf->map[15] = 0;
+	// wolf->map[0] = 0b11111111111111111;
+	// wolf->map[1] = 0b10001000100010001;
+	// wolf->map[2] = 0b10000000000000001;
+	// wolf->map[3] = 0b10000000000000001;
+	// wolf->map[4] = 0b10000000100000001;
+	// wolf->map[5] = 0b11000001110000011;
+	// wolf->map[6] = 0b10000011111000001;
+	// wolf->map[7] = 0b10000001110000001;
+	// wolf->map[8] = 0b10000011111000001;
+	// wolf->map[9] = 0b11000001110000011;
+	// wolf->map[10] = 0b10000000100000001;
+	// wolf->map[11] = 0b10000000000000001;
+	// wolf->map[12] = 0b10000000000000001;
+	// wolf->map[13] = 0b10001000100010001;
+	// wolf->map[14] = 0b11111111111111111;
+	// wolf->map[15] = 0;
 }
 
 void		map_1(t_wolf *wolf)
@@ -115,7 +131,7 @@ int			main(int argc, char **argv)
 		map_2(&wolf);
 	env.reinit = false;
 	reinit(&env, &wolf);
-	// mlx_hook(env.window, 2, 0, key_controls, (void *)&env);
+	mlx_hook(env.window, 2, 0, key_controls, (void *)&env);
 	// mlx_mouse_hook(env.window, &mouse_controls, (void *)&env);
 	// mlx_hook(env.window, 6, 0, another_ft, (void *)&env);
 	//printf("wolf->view_x = %f\n", wolf.view_x);
