@@ -19,7 +19,9 @@ void				draw_wall(t_env *env, t_wolf *wolf, int x)
 	int	wall_hi;
 
 	y = 0;
-	wall_hi = WIN_HI - ((int)wolf->distance * 42);
+	wall_hi = 0;
+	while (wall_hi < 1)
+		wall_hi = WIN_HI / wolf->distance;
 	sky = (WIN_HI - wall_hi) / 2;
 	// ft_printf("sky = %d\n", sky);
 	while (y < sky)

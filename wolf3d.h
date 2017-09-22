@@ -27,6 +27,8 @@
 # define KEY_S		1
 # define KEY_A		0
 # define KEY_D		2
+# define KEY_O		31
+# define KEY_P		35
 
 typedef	struct	s_env
 {
@@ -50,11 +52,11 @@ typedef	struct			s_wolf
 	float				view_x;
 	float				view_y;
 	float				slope;
-	float				inv_slope;
 	float				y_int;
 	float				distance;
 	int					inc_x;
 	int					inc_y;
+	float				radians;
 }						t_wolf;
 
 void				raycaster(t_env *env, t_wolf *wolf);

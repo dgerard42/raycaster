@@ -26,11 +26,8 @@ void				movement_controls(t_env *env, int keycode)
 	float x_add;
 	float y_add;
 
-	if (keycode == KEY_W || keycode == KEY_S || keycode == KEY_A || keycode == KEY_D)
-	{
-		x_add = 0.3 / sqrt(1 + pow(((t_wolf *)env->wolf_mem)->slope, 2));
-		y_add = (0.3 * ((t_wolf *)env->wolf_mem)->slope) / sqrt(1 + pow(((t_wolf *)env->wolf_mem)->slope, 2));
-	}
+	x_add = 0.3 / sqrt(1 + pow(((t_wolf *)env->wolf_mem)->slope, 2));
+	y_add = (0.3 * ((t_wolf *)env->wolf_mem)->slope) / sqrt(1 + pow(((t_wolf *)env->wolf_mem)->slope, 2));
 	if (keycode == KEY_W)
 	{
 		// printf("xadd%f\n", x_add);
@@ -67,15 +64,38 @@ void				movement_controls(t_env *env, int keycode)
 	}
 }
 
+void				rotation_controls(t_env *env, int keycode)
+{
+	float	tmp_posx;
+	float	tmp_posy;
+
+	tmp_posx = 0;
+	tmp_posy = 0;
+	((t_wolf *)env->wolf_mem)->view_x -= ((t_wolf *)env->wolf_mem)->pos_x;
+	((t_wolf *)env->wolf_mem)->view_y -= ((t_wolf *)env->wolf_mem)->pos_y;
+	if (keycode == KEY_O)
+	{
+		((t_wolf *)env->wolf_mem)->pos_x = ((t_wolf *)env->wolf_mem)->pos_x * cos(.1) - ((t_wolf *)env->wolf_mem)->pos_y * sin(.2);
+		((t_wolf *)env->wolf_mem)->pos_y = ((t_wolf *)env->wolf_mem)->pos_y * cos(.1) + ((t_wolf *)env->wolf_mem)->pos_y * sin(.2);
+	}
+	else if (keycode == KEY_P)
+	{
+
+		((t_wolf *)env->wolf_mem)->pos_x = ((t_wolf *)env->wolf_mem)->pos_x * cos(-.1) - ((t_wolf *)env->wolf_mem)->pos_y * sin(-.2);
+		((t_wolf *)env->wolf_mem)->pos_y = ((t_wolf *)env->wolf_mem)->pos_y * cos(-.1) + ((t_wolf *)env->wolf_mem)->pos_y * sin(-.2);
+	}
+	((t_wolf *)env->wolf_mem)->view_x += ((t_wolf *)env->wolf_mem)->pos_x;
+	((t_wolf *)env->wolf_mem)->view_y += ((t_wolf *)env->wolf_mem)->pos_y;
+}
+
 int					key_controls(int keycode, t_env *env)
 {
 	if (keycode == KEY_ESC)
 		exit_wolf3d(env);
-	movement_controls(env, keycode);
-	// if (keycode == KEY_C)
-	// 	env->color_inc += (env->color_inc > 100000) ? 20000 : 2000;
-	// if (keycode == KEY_V)
-	// 	env->color_inc -= (env->color_inc > 100000) ? 20000 : 2000;
+	if (keycode == KEY_W || keycode == KEY_A || keycode == KEY_S || keycode == KEY_D)
+		movement_controls(env, keycode);
+	if (keycode == KEY_O || keycode == KEY_P)
+		rotation_controls(env, keycode);
 	env->reinit = true;
 	reinit(env, (t_wolf *)env->wolf_mem);
 	return (0);
