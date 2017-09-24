@@ -12,6 +12,35 @@
 
 #include "wolf3d.h"
 
+void			minimap_debugger(t_env *env, t_wolf *wolf)
+{
+	int x;
+	int y = 0;
+
+	while (y < wolf->map_choice)
+	{
+		x = 0;
+		while (x < 17)
+		{
+			if ((int)wolf->pos_x == x && (int)wolf->pos_y == y)
+				write(1, "X", 1);
+			else if ((int)wolf->view_x == x && (int)wolf->view_y == y)
+				write(1, "x", 1);
+			else if (wolf->map[y] && wolf->map[y] & (0b1 << x))
+				write(1, "#", 1);
+			else
+				write(1, ".", 1);
+			x++;
+		}
+		write(1, "\n", 1);
+		y++;
+	}
+	printf("posy%f ", wolf->pos_y);
+	printf("posx%f\n", wolf->pos_x);
+	printf("view_y%f ", wolf->view_y);
+	printf("view_x%f\n", wolf->view_x);
+}
+
 void			reinit(t_env *env, t_wolf *wolf)
 {
 	if (env->reinit == true)
@@ -23,47 +52,46 @@ void			reinit(t_env *env, t_wolf *wolf)
 		&env->size_line, &env->endian);
 	// printf("starting seg\n");
 	raycaster(env, wolf);
-	printf("here before put img to window\n");
+	// printf("here before put img to window\n");
 	mlx_put_image_to_window(env->mlx, env->window, env->image, 0, 0);
+	minimap_debugger(env, wolf);
 }
 
 void		map_0(t_wolf *wolf)
 {
 	// printf("map 0!!\n");
-	// wolf->map_choice = 24;
 	wolf->map_choice = 16;
-//	wolf->map = (unsigned long *)malloc(sizeof(unsigned long) * 15);
-	// wolf->map[0] = 0b1111111111111111111111111;
-	// wolf->map[1] = 0b1000000000000000000000001;
-	// wolf->map[2] = 0b1000000000000000000000001;
-	// wolf->map[3] = 0b1000000000000000000000001;
-	// wolf->map[4] = 0b1000000000000000000000001;
-	// wolf->map[5] = 0b1000000000000000000000001;
-	// wolf->map[6] = 0b1000000000000000000000001;
-	// wolf->map[7] = 0b1000000000000000000000001;
-	// wolf->map[8] = 0b1000000000000000000000001;
-	// wolf->map[9] = 0b1000000000000000000000001;
-	// wolf->map[10] = 0b1000000000000000000000001;
-	// wolf->map[11] = 0b1000000000000000000000001;
-	// wolf->map[12] = 0b1000000000000000000000001;
-	// wolf->map[13] = 0b1000000000000000000000001;
-	// wolf->map[14] = 0b1111111111111111111111111;
-	// wolf->map[15] = 0;
 	wolf->map[0] = 0b11111111111111111;
-	wolf->map[1] = 0b10001000100010001;
+	wolf->map[1] = 0b10000000000000001;
 	wolf->map[2] = 0b10000000000000001;
 	wolf->map[3] = 0b10000000000000001;
-	wolf->map[4] = 0b10000000100000001;
-	wolf->map[5] = 0b11000001110000011;
-	wolf->map[6] = 0b10000011111000001;
-	wolf->map[7] = 0b10000001110000001;
-	wolf->map[8] = 0b10000011111000001;
-	wolf->map[9] = 0b11000001110000011;
-	wolf->map[10] = 0b10000000100000001;
+	wolf->map[4] = 0b10000000000000001;
+	wolf->map[5] = 0b10000000000000001;
+	wolf->map[6] = 0b10000000000000001;
+	wolf->map[7] = 0b10000000000000001;
+	wolf->map[8] = 0b10000000000000001;
+	wolf->map[9] = 0b10000000000000001;
+	wolf->map[10] = 0b10000000000000001;
 	wolf->map[11] = 0b10000000000000001;
 	wolf->map[12] = 0b10000000000000001;
-	wolf->map[13] = 0b10001000100010001;
+	wolf->map[13] = 0b10000000000000001;
 	wolf->map[14] = 0b11111111111111111;
+	// wolf->map[15] = 0;
+	// wolf->map[0] = 0b11111111111111111;
+	// wolf->map[1] = 0b10001000100010001;
+	// wolf->map[2] = 0b10000000000000001;
+	// wolf->map[3] = 0b10000000000000001;
+	// wolf->map[4] = 0b10000000100000001;
+	// wolf->map[5] = 0b11000001110000011;
+	// wolf->map[6] = 0b10000011111000001;
+	// wolf->map[7] = 0b10000001110000001;
+	// wolf->map[8] = 0b10000011111000001;
+	// wolf->map[9] = 0b11000001110000011;
+	// wolf->map[10] = 0b10000000100000001;
+	// wolf->map[11] = 0b10000000000000001;
+	// wolf->map[12] = 0b10000000000000001;
+	// wolf->map[13] = 0b10001000100010001;
+	// wolf->map[14] = 0b11111111111111111;
 	wolf->map[15] = 0;
 }
 

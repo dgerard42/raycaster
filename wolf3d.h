@@ -17,6 +17,7 @@
 # include "minilibx/mlx.h"
 # include <stdbool.h>
 # include <math.h>
+# include <unistd.h> //again, rm at end
 # include <stdio.h> //rm this at the end
 
 # define WIN_HI		800

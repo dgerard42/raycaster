@@ -26,8 +26,8 @@ void				movement_controls(t_env *env, int keycode)
 	float x_add;
 	float y_add;
 
-	x_add = 0.3 / sqrt(1 + pow(((t_wolf *)env->wolf_mem)->slope, 2));
-	y_add = (0.3 * ((t_wolf *)env->wolf_mem)->slope) / sqrt(1 + pow(((t_wolf *)env->wolf_mem)->slope, 2));
+	x_add = 0.2 / sqrt(1 + pow(((t_wolf *)env->wolf_mem)->slope, 2));
+	y_add = (0.2 * ((t_wolf *)env->wolf_mem)->slope) / sqrt(1 + pow(((t_wolf *)env->wolf_mem)->slope, 2));
 	if (keycode == KEY_W)
 	{
 		// printf("xadd%f\n", x_add);
@@ -80,7 +80,6 @@ void				rotation_controls(t_env *env, int keycode)
 	}
 	else if (keycode == KEY_P)
 	{
-
 		((t_wolf *)env->wolf_mem)->pos_x = ((t_wolf *)env->wolf_mem)->pos_x * cos(-.1) - ((t_wolf *)env->wolf_mem)->pos_y * sin(-.2);
 		((t_wolf *)env->wolf_mem)->pos_y = ((t_wolf *)env->wolf_mem)->pos_y * cos(-.1) + ((t_wolf *)env->wolf_mem)->pos_y * sin(-.2);
 	}
