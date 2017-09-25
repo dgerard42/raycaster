@@ -52,12 +52,17 @@ typedef	struct			s_wolf
 	float				pos_y;
 	float				view_x;
 	float				view_y;
+	// float				slope_static;
 	float				slope;
+	float				rise;
+	float				run;
+	// float				inv_slope;
 	float				y_int;
 	float				distance;
 	int					inc_x;
 	int					inc_y;
-	float				radians;
+	// float				radians;
+	int					wall_color;
 }						t_wolf;
 
 void				raycaster(t_env *env, t_wolf *wolf);

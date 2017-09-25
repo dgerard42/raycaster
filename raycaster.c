@@ -12,16 +12,23 @@
 
 #include "wolf3d.h"
 
+// int					wall_color(t_wolf *wolf)
+// {
+//
+// }
+
 void				draw_wall(t_env *env, t_wolf *wolf, int x)
 {
 	int y;
 	int	sky;
 	int	wall_hi;
+	int	wall_color;
 
 	y = 0;
 	wall_hi = WIN_HI / wolf->distance;
 	sky = (WIN_HI - wall_hi) / 2;
 	// ft_printf("sky = %d\n", sky);
+	// wall_color = wall_color(t_wolf, wolf);
 	while (y < sky)
 	{
 		env->pixels[x + (y++ * WIN_LEN)] = 0x000000;
@@ -69,14 +76,24 @@ void				shoot_ray(t_env *env, t_wolf *wolf)
 			// if (wolf->map[(int)wall_y] && wolf->map[(int)wall_y] & (0b1 << (int)wall_x))
 			// 	break;
 		}
-		// printf("int(wall_x)%f\n", wall_x);
+		// printf("wall_x%f\n", wall_x);
 		// printf("wolf->slope%f\n", wolf->slope);
 		// printf("yint%f\n", wolf->y_int);
-		// printf("int(wall_y)%f\n", wal_y);
+		// printf("wall_y%f\n", wall_y);
 	}
 	wolf->distance = sqrt(ft_power(wall_x - wolf->pos_x, 2) + ft_power(wall_y - wolf->pos_y, 2));
 	// printf("distance = %f\n", wolf->distance);
 }
+
+// void				rotation(t_wolf *wolf)
+// {
+// 	wolf->view_x -= wolf->pos_x;
+// 	wolf->view_y -= wolf->pos_y;
+// 	wolf->pos_x = (wolf->pos_x * cos(wolf->radians)) - (wolf->pos_y * sin(wolf->radians));
+// 	wolf->pos_y = (wolf->pos_y * cos(wolf->radians)) + (wolf->pos_x * sin(wolf->radians));
+// 	wolf->view_x += wolf->pos_x;
+// 	wolf->view_y += wolf->pos_y;
+// }
 
 void				initialize(t_env * env, t_wolf *wolf) //make this function less ugly when eveything works
 {
@@ -100,14 +117,18 @@ void				initialize(t_env * env, t_wolf *wolf) //make this function less ugly whe
 	// printf("x%d, y%d\n", x, y);
 	wolf->pos_x = (float)x;
 	wolf->pos_y = (float)y;
-	wolf->view_x = wolf->pos_x + 1;
+	wolf->view_x = wolf->pos_x + 0;
 	wolf->view_y = wolf->pos_y + 1;
+	// wolf->radians = ((float)3 / (float)2) * 3.14159;
+	// printf("%f\n", wolf->radians);
+
 }
 
 void				raycaster(t_env *env, t_wolf *wolf)
 {
 	int		x;
 	float	view_inc;
+	// float	tmp_viewx;
 
 	x = 0;
 	view_inc = (float)2 / ((float)WIN_LEN - (float)1 / (float)2);
@@ -118,12 +139,18 @@ void				raycaster(t_env *env, t_wolf *wolf)
 	// printf("posx%f\n", wolf->pos_x);
 	// printf("view_y%f\n", wolf->view_y);
 	// printf("wolf->view_x%f\n", wolf->view_x);
+	// tmp_viewx = wolf->view_x
+	wolf->rise = wolf->view_y - wolf->pos_y;
+	wolf->run = wolf->view_x - wolf->pos_x;
 	wolf->view_x -= view_inc * ((WIN_LEN - 1) / 2);
 	while (x < (WIN_LEN - 1))
 	{
 		// ft_printf("seg0\n");
-		wolf->slope = (wolf->view_y - wolf->pos_y) / (wolf->view_x - wolf->pos_x);
-		// wolf->inv_slope = (wolf->view_x - wolf->pos_x) / (wolf->view_y - wolf->pos_y);
+		// rotation(wolf);
+		wolf->slope = (wolf->view_x - wolf->pos_x == 0) ? wolf->rise / 0.0001 : wolf->rise / (wolf->view_x - wolf->pos_x);
+		// wolf->inv_slope = -((wolf->view_x - wolf->pos_x) / (wolf->view_y - wolf->pos_y));
+		// printf("slope%f\n", wolf->slope);
+		// printf("slope%f\n", wolf->inv_slope);
 		wolf->inc_x = (wolf->view_x - wolf->pos_x > 0) ? 1 : -1;
 		wolf->inc_y = (wolf->view_y - wolf->pos_y > 0) ? 1 : -1;
 		// printf("posy%f\n", wolf->pos_y);
