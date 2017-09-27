@@ -61,6 +61,7 @@ typedef	struct			s_wolf
 	float				distance;
 	int					inc_x;
 	int					inc_y;
+	int					side;
 	// float				radians;
 	// int					wall_color;
 }						t_wolf;
