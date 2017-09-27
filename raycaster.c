@@ -6,7 +6,7 @@
 /*   By: dgerard <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/28 15:15:31 by dgerard           #+#    #+#             */
-/*   Updated: 2017/08/28 15:15:32 by dgerard          ###   ########.fr       */
+/*   Updated: 2017/09/27 10:05:25 by dgerard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,21 @@
 
 // int					wall_color(t_wolf *wolf)
 // {
+// 	float rise;
+// 	float run;
 //
+// 	rise = (wolf->view_y - wolf->map_choice) - (wolf->pos_y - wolf->map_choice);
+// 	run = (wolf->view_x - 15) - (wolf->pos_x - 15);
+// 	if (run <= 1 && run >= -1 && rise >= 1)
+// 		return (0x580202);
+// 	else if (rise <= 1 && rise >= -1 && run >= 1)
+// 		return (0x603434);
+// 	else if (run <= 1 && run >= -1 && rise <= 1)
+// 		return (0x545252);
+// 	else if (rise <= 1 && rise >= -1 && run <= 1)
+// 		return(0xbf1a1a);
+// 	else
+// 		return (0x00FF00); //error color
 // }
 
 void				draw_wall(t_env *env, t_wolf *wolf, int x)
@@ -22,13 +36,13 @@ void				draw_wall(t_env *env, t_wolf *wolf, int x)
 	int y;
 	int	sky;
 	int	wall_hi;
-	int	wall_color;
+	// int	color;
 
 	y = 0;
 	wall_hi = WIN_HI / wolf->distance;
 	sky = (WIN_HI - wall_hi) / 2;
 	// ft_printf("sky = %d\n", sky);
-	// wall_color = wall_color(t_wolf, wolf);
+	// color = wall_color(wolf);
 	while (y < sky)
 	{
 		env->pixels[x + (y++ * WIN_LEN)] = 0x000000;
@@ -49,51 +63,85 @@ void				draw_wall(t_env *env, t_wolf *wolf, int x)
 
 void				shoot_ray(t_env *env, t_wolf *wolf)
 {
+	//keep track of whole number map values to make sure that you arn't rounding down
 	float	wall_x;
 	float	wall_y;
+	int		map_x;
+	int		map_y;
 
 	wall_x = wolf->pos_x;
 	wall_y = wolf->pos_y;
+	map_x = (int)wolf->pos_x;
+	map_y = (int)wolf->pos_y;
 	// printf("int(wall_x)@start%f\n", wall_x);
 	// printf("int(wall_y)@start%f\n", wall_y);
 	while (1)
 	{
-		if (wolf->map[(int)wall_y] && wolf->map[(int)wall_y] & (0b1 << (int)wall_x))
-				break;
+// 		if (wolf->map[(int)wall_y] & (0b1 << (int)wall_x))// (wolf->map[(int)wall_y] && wolf->map[(int)wall_y] & (0b1 << ((int)wall_x + 1))))
+// // 			break;
+		if (wolf->map[map_y] & (0b1 << map_x))// (wolf->map[(int)wall_y] && wolf->map[(int)wall_y] & (0b1 << ((int)wall_x + 1))))
+			break;
 		if (((int)wall_y + wolf->inc_y) - wolf->pos_y < ((int)wall_x + wolf->inc_x) - wolf->pos_x)
 		{
 			wall_y = (int)wall_y + wolf->inc_y;
 			wall_x = (wall_y - wolf->y_int) / wolf->slope;
+			map_y += wolf->inc_y;
 			if (wall_x > wolf->map_choice)
 				wall_x = wolf->map_choice;
+			// if (wolf->map[(int)wall_y] && wolf->map[(int)wall_y] & (0b1 << ((int)wall_x + 1)))
+				// break;
 		}
 		else
 		{
 			wall_x = (int)wall_x + wolf->inc_x;
 			wall_y = (wolf->slope * wall_x) + wolf->y_int;
+			map_x += wolf->inc_x;
 			if (wall_y > 14)
-				wall_y = 14;
+				wall_y = 14.0;
 			// if (wolf->map[(int)wall_y] && wolf->map[(int)wall_y] & (0b1 << (int)wall_x))
-			// 	break;
+				// break;
 		}
 		// printf("wall_x%f\n", wall_x);
 		// printf("wolf->slope%f\n", wolf->slope);
 		// printf("yint%f\n", wolf->y_int);
 		// printf("wall_y%f\n", wall_y);
 	}
-	wolf->distance = sqrt(ft_power(wall_x - wolf->pos_x, 2) + ft_power(wall_y - wolf->pos_y, 2));
-	// printf("distance = %f\n", wolf->distance);
+	wolf->distance = sqrt(powf(wall_x - wolf->pos_x, 2.0) + powf(wall_y - wolf->pos_y, 2.0));
+	printf("distance = %f\n", wolf->distance);
 }
 
-// void				rotation(t_wolf *wolf)
-// {
-// 	wolf->view_x -= wolf->pos_x;
-// 	wolf->view_y -= wolf->pos_y;
-// 	wolf->pos_x = (wolf->pos_x * cos(wolf->radians)) - (wolf->pos_y * sin(wolf->radians));
-// 	wolf->pos_y = (wolf->pos_y * cos(wolf->radians)) + (wolf->pos_x * sin(wolf->radians));
-// 	wolf->view_x += wolf->pos_x;
-// 	wolf->view_y += wolf->pos_y;
-// }
+void				shoot_ray(t_env * env, t_wolf *wolf)
+{
+	int		map_x;
+	int		map_y;
+	float	side_dist_x;
+	float	side_dist_y;
+	float	delta_dist_x;
+	float	delta_dist_y;
+
+	map_x = (int)wolf->pos_x;
+	map_y = (int)wolf->pos_y;
+	side_dist_x = 0;
+	side_dist_y = 0;
+	delta_dist_x = sqrt(1 + 
+	while (1)
+	{
+		if (wolf->map[map_y] & (0b1 << map_x))
+		   break;	
+		if (side_dist_x < side_dist_y)
+		{
+			side_dist_x += delta_dist_x;
+			map_x += wolf->inc_x;
+			side = 0;
+		}
+		else
+		{
+			side_dist_y += delta_dist_y;
+			map_y += wolf->inc_y;
+			side = 1;
+		}
+	}
+}
 
 void				initialize(t_env * env, t_wolf *wolf) //make this function less ugly when eveything works
 {
@@ -118,7 +166,7 @@ void				initialize(t_env * env, t_wolf *wolf) //make this function less ugly whe
 	wolf->pos_x = (float)x;
 	wolf->pos_y = (float)y;
 	wolf->view_x = wolf->pos_x + 0;
-	wolf->view_y = wolf->pos_y + 1;
+	wolf->view_y = wolf->pos_y + 1.5;
 	// wolf->radians = ((float)3 / (float)2) * 3.14159;
 	// printf("%f\n", wolf->radians);
 
@@ -128,7 +176,7 @@ void				raycaster(t_env *env, t_wolf *wolf)
 {
 	int		x;
 	float	view_inc;
-	// float	tmp_viewx;
+	float	tmp_viewx;
 
 	x = 0;
 	view_inc = (float)2 / ((float)WIN_LEN - (float)1 / (float)2);
@@ -139,7 +187,7 @@ void				raycaster(t_env *env, t_wolf *wolf)
 	// printf("posx%f\n", wolf->pos_x);
 	// printf("view_y%f\n", wolf->view_y);
 	// printf("wolf->view_x%f\n", wolf->view_x);
-	// tmp_viewx = wolf->view_x
+	tmp_viewx = wolf->view_x;
 	wolf->rise = wolf->view_y - wolf->pos_y;
 	wolf->run = wolf->view_x - wolf->pos_x;
 	wolf->view_x -= view_inc * ((WIN_LEN - 1) / 2);
@@ -168,6 +216,7 @@ void				raycaster(t_env *env, t_wolf *wolf)
 		x++;
 		wolf->view_x += view_inc;
 	}
-	wolf->view_x -= view_inc * (WIN_LEN / 2);
+	printf("distance = %f\n", wolf->distance);
+	wolf->view_x = tmp_viewx;
 	// printf("wolf->view_x = %f\n", wolf->view_x);
 }

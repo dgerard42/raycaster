@@ -59,40 +59,36 @@ void				movement_controls(t_env *env, int keycode)
 	}
 	else if (keycode == KEY_A)
 	{
-		((t_wolf *)env->wolf_mem)->pos_x += x_add;
-		((t_wolf *)env->wolf_mem)->pos_y += y_add;
-		((t_wolf *)env->wolf_mem)->view_x += x_add;
-		((t_wolf *)env->wolf_mem)->view_y += y_add;
-	}
-	else if (keycode == KEY_D)
-	{
 		((t_wolf *)env->wolf_mem)->pos_x -= x_add;
 		((t_wolf *)env->wolf_mem)->pos_y -= y_add;
 		((t_wolf *)env->wolf_mem)->view_x -= x_add;
 		((t_wolf *)env->wolf_mem)->view_y -= y_add;
 	}
+	else if (keycode == KEY_D)
+	{
+		((t_wolf *)env->wolf_mem)->pos_x += x_add;
+		((t_wolf *)env->wolf_mem)->pos_y += y_add;
+		((t_wolf *)env->wolf_mem)->view_x += x_add;
+		((t_wolf *)env->wolf_mem)->view_y += y_add;
+	}
 }
 
 void				rotation_controls(t_env *env, int keycode)
 {
-	// float	tmp_posx;
-	// float	tmp_posy;
-	//
-	// tmp_posx = 0;
-	// tmp_posy = 0;
+	float tmp_viewx;
+
 	((t_wolf *)env->wolf_mem)->view_x -= ((t_wolf *)env->wolf_mem)->pos_x;
-	((t_wolf *)env->wolf_mem)->view_y -= ((t_wolf *)env->wolf_mem)->pos_y;
+	((t_wolf *)env->wolf_mem)->view_y -= ((t_wolf *)env->wolf_mem)->pos_y;	
+	tmp_viewx = ((t_wolf *)env->wolf_mem)->view_x;
 	if (keycode == KEY_O)
 	{
-		((t_wolf *)env->wolf_mem)->pos_x = ((t_wolf *)env->wolf_mem)->pos_x * cos(.1) - ((t_wolf *)env->wolf_mem)->pos_y * sin(.2);
-		((t_wolf *)env->wolf_mem)->pos_y = ((t_wolf *)env->wolf_mem)->pos_y * cos(.1) + ((t_wolf *)env->wolf_mem)->pos_y * sin(.2);
-		// ((t_wolf *)env->wolf_mem)->radians += 0.1;
+		((t_wolf *)env->wolf_mem)->view_x = (tmp_viewx * cos(.2)) - (((t_wolf *)env->wolf_mem)->view_y * sin(.2));
+		((t_wolf *)env->wolf_mem)->view_y = (tmp_viewx * sin(.2)) + (((t_wolf *)env->wolf_mem)->view_y * cos(.2));
 	}
 	else if (keycode == KEY_P)
 	{
-		((t_wolf *)env->wolf_mem)->pos_x = ((t_wolf *)env->wolf_mem)->pos_x * cos(-.1) - ((t_wolf *)env->wolf_mem)->pos_y * sin(-.2);
-		((t_wolf *)env->wolf_mem)->pos_y = ((t_wolf *)env->wolf_mem)->pos_y * cos(-.1) + ((t_wolf *)env->wolf_mem)->pos_y * sin(-.2);
-		// ((t_wolf *)env->wolf_mem)->radians -= 0.1;
+		((t_wolf *)env->wolf_mem)->view_x = (tmp_viewx * cos(-.2)) - (((t_wolf *)env->wolf_mem)->view_y * sin(-.2));
+		((t_wolf *)env->wolf_mem)->view_y = (tmp_viewx * sin(-.2)) + (((t_wolf *)env->wolf_mem)->view_y * cos(-.2));
 	}
 	((t_wolf *)env->wolf_mem)->view_x += ((t_wolf *)env->wolf_mem)->pos_x;
 	((t_wolf *)env->wolf_mem)->view_y += ((t_wolf *)env->wolf_mem)->pos_y;

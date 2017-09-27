@@ -46,7 +46,7 @@ void			reinit(t_env *env, t_wolf *wolf)
 	if (env->reinit == true)
 		mlx_destroy_image(env->mlx, env->image);
 	else
-		env->window = mlx_new_window(env->mlx, WIN_LEN, WIN_HI, "escape the maze");
+		env->window = mlx_new_window(env->mlx, WIN_LEN, WIN_HI, "welcome to hell");
 	env->image = mlx_new_image(env->mlx, WIN_LEN, WIN_HI);
 	env->pixels = (int *)mlx_get_data_addr(env->image, &env->bits_per_pixel,
 		&env->size_line, &env->endian);
@@ -61,37 +61,36 @@ void		map_0(t_wolf *wolf)
 {
 	// printf("map 0!!\n");
 	wolf->map_choice = 16;
-	wolf->map[0] = 0b11111111111111111;
-	wolf->map[1] = 0b10000000000000001;
-	wolf->map[2] = 0b10000000000000001;
-	wolf->map[3] = 0b10000000000000001;
-	wolf->map[4] = 0b10000000000000001;
-	wolf->map[5] = 0b10000000000000001;
-	wolf->map[6] = 0b10000000000000001;
-	wolf->map[7] = 0b10000000000000001;
-	wolf->map[8] = 0b10000000000000001;
-	wolf->map[9] = 0b10000000000000001;
-	wolf->map[10] = 0b10000000000000001;
-	wolf->map[11] = 0b10000000000000001;
-	wolf->map[12] = 0b10000000000000001;
-	wolf->map[13] = 0b10000000000000001;
-	wolf->map[14] = 0b11111111111111111;
-	// wolf->map[15] = 0;
 	// wolf->map[0] = 0b11111111111111111;
-	// wolf->map[1] = 0b10001000100010001;
+	// wolf->map[1] = 0b10000000000000001;
 	// wolf->map[2] = 0b10000000000000001;
 	// wolf->map[3] = 0b10000000000000001;
-	// wolf->map[4] = 0b10000000100000001;
-	// wolf->map[5] = 0b11000001110000011;
-	// wolf->map[6] = 0b10000011111000001;
-	// wolf->map[7] = 0b10000001110000001;
-	// wolf->map[8] = 0b10000011111000001;
-	// wolf->map[9] = 0b11000001110000011;
-	// wolf->map[10] = 0b10000000100000001;
+	// wolf->map[4] = 0b10000000000000001;
+	// wolf->map[5] = 0b10000000000000001;
+	// wolf->map[6] = 0b10000000000000001;
+	// wolf->map[7] = 0b10000000000000001;
+	// wolf->map[8] = 0b10000000000000001;
+	// wolf->map[9] = 0b10000000000000001;
+	// wolf->map[10] = 0b10000000000000001;
 	// wolf->map[11] = 0b10000000000000001;
 	// wolf->map[12] = 0b10000000000000001;
-	// wolf->map[13] = 0b10001000100010001;
+	// wolf->map[13] = 0b10000000000000001;
 	// wolf->map[14] = 0b11111111111111111;
+	wolf->map[0] = 0b11111111111111111;
+	wolf->map[1] = 0b10001000100010001;
+	wolf->map[2] = 0b10000000000000001;
+	wolf->map[3] = 0b10000000000000001;
+	wolf->map[4] = 0b10000000100000001;
+	wolf->map[5] = 0b11000001110000011;
+	wolf->map[6] = 0b10000011111000001;
+	wolf->map[7] = 0b10000001110000001;
+	wolf->map[8] = 0b10000011111000001;
+	wolf->map[9] = 0b11000001110000011;
+	wolf->map[10] = 0b10000000100000001;
+	wolf->map[11] = 0b10000000000000001;
+	wolf->map[12] = 0b10000000000000001;
+	wolf->map[13] = 0b10001000100010001;
+	wolf->map[14] = 0b11111111111111111;
 	wolf->map[15] = 0;
 }
 
