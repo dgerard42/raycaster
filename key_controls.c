@@ -29,18 +29,18 @@ void				movement_controls(t_env *env, int keycode)
 	{
 		// x_add = 0.2 / sqrt(1 + pow(((t_wolf *)env->wolf_mem)->slope, 2));
 		// y_add = (0.2 * ((t_wolf *)env->wolf_mem)->slope) / sqrt(1 + pow(((t_wolf *)env->wolf_mem)->slope, 2));
-		x_add = ((t_wolf *)env->wolf_mem)->run / 20;
-		y_add = ((t_wolf *)env->wolf_mem)->rise / 20;
+		x_add = ((t_wolf *)env->wolf_mem)->run / 8;
+		y_add = ((t_wolf *)env->wolf_mem)->rise / 8;
 	}
 	else if (keycode == KEY_A || keycode == KEY_D)
 	{
 		// x_add = -0.2 / sqrt(1 + pow(((t_wolf *)env->wolf_mem)->inv_slope, 2));
 		// y_add = (-0.2 * ((t_wolf *)env->wolf_mem)->inv_slope) / sqrt(1 + pow(((t_wolf *)env->wolf_mem)->inv_slope, 2));
-		x_add = ((t_wolf *)env->wolf_mem)->rise / 20;
-		y_add = ((t_wolf *)env->wolf_mem)->run / 20;
+		x_add = ((t_wolf *)env->wolf_mem)->rise / 8;
+		y_add = ((t_wolf *)env->wolf_mem)->run / 8;
 	}
-	printf("xadd%f\n", x_add);
-	printf("yadd%f\n", y_add);
+	// printf("xadd%f\n", x_add);
+	// printf("yadd%f\n", y_add);
 	if (keycode == KEY_W)
 	{
 		((t_wolf *)env->wolf_mem)->pos_x += x_add;
