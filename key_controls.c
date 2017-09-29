@@ -29,15 +29,15 @@ void				movement_controls(t_env *env, int keycode)
 	{
 		// x_add = 0.2 / sqrt(1 + pow(((t_wolf *)env->wolf_mem)->slope, 2));
 		// y_add = (0.2 * ((t_wolf *)env->wolf_mem)->slope) / sqrt(1 + pow(((t_wolf *)env->wolf_mem)->slope, 2));
-		x_add = ((t_wolf *)env->wolf_mem)->run / 4;
-		y_add = ((t_wolf *)env->wolf_mem)->rise / 4;
+		x_add = ((t_wolf *)env->wolf_mem)->run / 20;
+		y_add = ((t_wolf *)env->wolf_mem)->rise / 20;
 	}
 	else if (keycode == KEY_A || keycode == KEY_D)
 	{
 		// x_add = -0.2 / sqrt(1 + pow(((t_wolf *)env->wolf_mem)->inv_slope, 2));
 		// y_add = (-0.2 * ((t_wolf *)env->wolf_mem)->inv_slope) / sqrt(1 + pow(((t_wolf *)env->wolf_mem)->inv_slope, 2));
-		x_add = ((t_wolf *)env->wolf_mem)->rise / 4;
-		y_add = ((t_wolf *)env->wolf_mem)->run / 4;
+		x_add = ((t_wolf *)env->wolf_mem)->rise / 20;
+		y_add = ((t_wolf *)env->wolf_mem)->run / 20;
 	}
 	printf("xadd%f\n", x_add);
 	printf("yadd%f\n", y_add);
@@ -78,7 +78,7 @@ void				rotation_controls(t_env *env, int keycode)
 	float tmp_viewx;
 
 	((t_wolf *)env->wolf_mem)->view_x -= ((t_wolf *)env->wolf_mem)->pos_x;
-	((t_wolf *)env->wolf_mem)->view_y -= ((t_wolf *)env->wolf_mem)->pos_y;	
+	((t_wolf *)env->wolf_mem)->view_y -= ((t_wolf *)env->wolf_mem)->pos_y;
 	tmp_viewx = ((t_wolf *)env->wolf_mem)->view_x;
 	if (keycode == KEY_O)
 	{

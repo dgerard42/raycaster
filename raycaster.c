@@ -36,10 +36,12 @@ void				draw_wall(t_env *env, t_wolf *wolf, int x)
 	int y;
 	int	sky;
 	int	wall_hi;
-	// int	color;
 
 	y = 0;
-	wall_hi = WIN_HI / wolf->distance;
+	if (wolf->distance == 0)
+		wall_hi = WIN_HI - 2;
+	else 	
+		wall_hi = WIN_HI / wolf->distance;
 	sky = (WIN_HI - wall_hi) / 2;
 	// ft_printf("sky = %d\n", sky);
 	// color = wall_color(wolf);
@@ -98,7 +100,6 @@ void				draw_wall(t_env *env, t_wolf *wolf, int x)
 // 		if (wolf->map[(int)wall_y] & (0b1 << ((int)wall_x + wolf->inc_x)))
 // 		{
 // 			printf("new break 0\n");
-// 			wolf->side =
 // 			break;
 // 		}
 // 		else if (wolf->map[(int)wall_y + wolf->inc_y] & (0b1 << (int)wall_x))
@@ -160,41 +161,45 @@ void				draw_wall(t_env *env, t_wolf *wolf, int x)
 // 	// printf("distance = %f\n", wolf->distance);
 // }
 
-void				shoot_yray(t_env *Env, t_wolf *wolf)
+void				shoot_yray(t_env *env, t_wolf *wolf)
 {
-	int		wall_y;
+	float	wall_y;
 	float	wall_x;
 	float	distance;
 
-	wall_y = (int)wolf->pos_y;
+	wall_y = wolf->pos_y;
 	wall_x = wolf->pos_x;
-	while (1 && wolf->map[wall_y])
+	while (1 && wolf->map[(int)wall_y])
 	{
-		if (wolf->map[wall_y] & (0b1 << (int)wall_x))
+		// if (wolf->map[(int)wall_y + wolf->inc_y] & (0b1 << ((int)wall_x - wolf->inc_x)))
+			// break;
+		if (wolf->map[(int)wall_y + wolf->inc_y] & (0b1 << ((int)wall_x - 0)))
 			break;
 		wall_y = wall_y + wolf->inc_y;
-		wall_x = ((float)wall_y - wolf->y_int) / wolf->slope;
+		wall_x = (wall_y - wolf->y_int) / wolf->slope;
 	}
-	distance = sqrt(powf(wall_x - wolf->pos_x, 2.0) + powf((float)wall_y - wolf->pos_y, 2.0));
+	distance = sqrt(powf(wall_x - wolf->pos_x, 2.0) + powf(wall_y - wolf->pos_y, 2.0));
 	if (distance < wolf->distance)
 		wolf->distance = distance;
 }
 
 void				shoot_xray(t_env *env, t_wolf *wolf)
 {
-	int 	wall_x;
+	float 	wall_x;
 	float	wall_y;
 
+	wall_x = wolf->pos_x;
 	wall_y = wolf->pos_y;
-	wall_x = (int)wolf->pos_x;
 	while (1 && wolf->map[(int)wall_y])
 	{
-		if (wolf->map[(int)wall_y + wolf->inc_y] & (0b1 << wall_x))
+		// if (wolf->map[(int)wall_y - wolf->inc_y] & (0b1 << ((int)wall_x + wolf->inc_x)))
+			// break;
+		if (wolf->map[(int)wall_y] & (0b1 << ((int)wall_x + wolf->inc_x)))
 			break;
 		wall_x = wall_x + wolf->inc_x;
-		wall_y = (wolf->slope * (float)wall_x) + wolf->y_int;
+		wall_y = (wolf->slope * wall_x) + wolf->y_int;
 	}
-	wolf->distance = sqrt(powf(wall_x - wolf->pos_x, 2.0) + powf((float)wall_y - wolf->pos_y, 2.0));
+	wolf->distance = sqrt(powf(wall_x - wolf->pos_x, 2.0) + powf(wall_y - wolf->pos_y, 2.0));
 }
 
 void				initialize(t_env * env, t_wolf *wolf) //make this function less ugly when eveything works
