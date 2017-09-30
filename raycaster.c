@@ -82,14 +82,18 @@ void				shoot_yray(t_env *env, t_wolf *wolf)
 	// wall_x = (wall_y - wolf->y_int) / wolf->slope;
 	while (1 && wolf->map[(int)wall_y])
 	{
-		// if (wolf->map[(int)wall_y + wolf->inc_y] & (0b1 << ((int)wall_x - wolf->inc_x)))
+		// if (wolf->map[(int)wall_y + wolf->inc_y] & (0b1 << ((int)wall_x + wolf->inc_x)))
 			// break;
-		if (wolf->map[(int)wall_y + wolf->inc_y] & (0b1 << ((int)wall_x - 0)))
-			break; //best version so far, but it doesn't work smoothly
-		// if (wolf->map[(int)wall_y] & (0b1 << (int)wall_x))
-			// break; //no incs
+		// if (wolf->map[(int)wall_y + wolf->inc_y] & (0b1 << ((int)wall_x - 0)))
+			// break; //best version so far, but it doesn't connect walls
+		if (wolf->map[(int)wall_y] & (0b1 << (int)wall_x))
+			break; //no incs
 		wall_y = (int)wall_y + wolf->inc_y;
 		wall_x = (wall_y - wolf->y_int) / wolf->slope;
+		if (wall_x > wolf->map_choice)
+			wall_x = wolf->map_choice;
+		if (wall_x < 0)
+			wall_x = 0;
 	}
 	// distance = sqrt(powf(wall_x - wolf->pos_x, 2.0) + powf(wall_y - wolf->pos_y, 2.0));
 	distance = sqrt(powf(wall_x - wolf->pos_x, 2.0) + powf(wall_y - wolf->pos_y, 2.0));
@@ -112,14 +116,19 @@ void				shoot_xray(t_env *env, t_wolf *wolf)
 	// wall_y = (wolf->slope * wall_x) + wolf->y_int;
 	while (1 && wolf->map[(int)wall_y])
 	{
-		// if (wolf->map[(int)wall_y - wolf->inc_y] & (0b1 << ((int)wall_x + wolf->inc_x)))
+		// if (wolf->map[(int)wall_y + wolf->inc_y] & (0b1 << ((int)wall_x + wolf->inc_x)))
 			// break;
-		if (wolf->map[(int)wall_y] & (0b1 << ((int)wall_x + wolf->inc_x)))
-			break; //best version
-		// if (wolf->map[(int)wall_y] & (0b1 << (int)wall_x))
-			// break; //no incs
+
+		// if (wolf->map[(int)wall_y] & (0b1 << ((int)wall_x + wolf->inc_x)))
+			// break; //best version
+		if (wolf->map[(int)wall_y] & (0b1 << (int)wall_x))
+			break; //no incs
 		wall_x = (int)wall_x + wolf->inc_x; //typecasting as an int here allows an even increment to the next whole # from a possible decimaled starting point
 		wall_y = (wolf->slope * wall_x) + wolf->y_int;
+		if (wall_y > 14.0)
+			wall_y = 14.0;
+		if (wall_y < 0)
+			wall_y = 0;
 	}
 	wolf->distance = sqrt(powf(wall_x - wolf->pos_x, 2.0) + powf(wall_y - wolf->pos_y, 2.0));
 	wolf->side = 0;
@@ -150,8 +159,11 @@ void				initialize(t_env * env, t_wolf *wolf) //make this function less ugly whe
 	// printf("x%d, y%d\n", x, y);
 	wolf->pos_x = (float)x;
 	wolf->pos_y = (float)y;
+	wolf->pos_x = 3;
+	wolf->pos_y = 4;
 	wolf->view_x = wolf->pos_x + 0;
-	wolf->view_y = wolf->pos_y + 1.5;
+	wolf->view_y = wolf->pos_y + 1;
+	wolf->radians = (3 * M_PI) / 2;
 	// wolf->radians = ((float)3 / (float)2) * 3.14159;
 	// printf("%f\n", wolf->radians);
 
@@ -164,7 +176,7 @@ void				raycaster(t_env *env, t_wolf *wolf)
 	float	tmp_viewx;
 
 	x = 0;
-	view_inc = (float)2 / ((float)WIN_LEN - (float)1 / (float)2);
+	view_inc = (float)1.5 / ((float)WIN_LEN - (float)1 / (float)2);
 	if (env->reinit == false)
 		initialize(env, wolf);
 	// printf("%f\n", view_inc);

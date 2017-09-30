@@ -62,6 +62,7 @@ typedef	struct			s_wolf
 	int					inc_x;
 	int					inc_y;
 	int					side;
+	float				radians;
 }						t_wolf;
 
 void				raycaster(t_env *env, t_wolf *wolf);
