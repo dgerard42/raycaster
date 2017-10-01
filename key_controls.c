@@ -84,13 +84,19 @@ void				rotation_controls(t_env *env, int keycode)
 	{
 		((t_wolf *)env->wolf_mem)->view_x = (tmp_viewx * cos(.2)) - (((t_wolf *)env->wolf_mem)->view_y * sin(.2));
 		((t_wolf *)env->wolf_mem)->view_y = (tmp_viewx * sin(.2)) + (((t_wolf *)env->wolf_mem)->view_y * cos(.2));
-		((t_wolf *)env->wolf_mem)->radians += 0.2;
+		if (((t_wolf *)env->wolf_mem)->radians + 0.2 > 6.283)
+			((t_wolf *)env->wolf_mem)->radians = 0;
+		else
+			((t_wolf *)env->wolf_mem)->radians += 0.2;
 	}
 	else if (keycode == KEY_P)
 	{
 		((t_wolf *)env->wolf_mem)->view_x = (tmp_viewx * cos(-.2)) - (((t_wolf *)env->wolf_mem)->view_y * sin(-.2));
 		((t_wolf *)env->wolf_mem)->view_y = (tmp_viewx * sin(-.2)) + (((t_wolf *)env->wolf_mem)->view_y * cos(-.2));
-		((t_wolf *)env->wolf_mem)->radians -= 0.2;
+		if (((t_wolf *)env->wolf_mem)->radians - 0.2 < 0)
+			((t_wolf *)env->wolf_mem)->radians = 6.1;
+		else
+			((t_wolf *)env->wolf_mem)->radians -= 0.2;
 	}
 	((t_wolf *)env->wolf_mem)->view_x += ((t_wolf *)env->wolf_mem)->pos_x;
 	((t_wolf *)env->wolf_mem)->view_y += ((t_wolf *)env->wolf_mem)->pos_y;
