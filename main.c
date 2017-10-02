@@ -24,7 +24,7 @@ void			minimap_debugger(t_env *env, t_wolf *wolf)
 		{
 			if ((int)wolf->pos_x == x && (int)wolf->pos_y == y)
 				write(1, "X", 1);
-			else if ((int)wolf->view_x == x && (int)wolf->view_y == y)
+			else if ((int)(wolf->pos_x + wolf->ray_vector_x) == x && (int)(wolf->pos_y + wolf->ray_vector_y) == y)
 				write(1, "x", 1);
 			else if (wolf->map[y] && wolf->map[y] & (0b1 << x))
 				write(1, "#", 1);
@@ -37,8 +37,8 @@ void			minimap_debugger(t_env *env, t_wolf *wolf)
 	}
 	printf("posy%f ", wolf->pos_y);
 	printf("posx%f\n", wolf->pos_x);
-	printf("view_y%f ", wolf->view_y);
-	printf("view_x%f\n", wolf->view_x);
+	printf("view_y%f ", wolf->pos_y + wolf->ray_vector_y);
+	printf("view_x%f\n", wolf->pos_x + wolf->ray_vector_x);
 }
 
 void			reinit(t_env *env, t_wolf *wolf)
