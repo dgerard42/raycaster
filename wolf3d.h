@@ -22,6 +22,7 @@
 
 # define WIN_HI		800
 # define WIN_LEN	1200
+# define SCALE		64
 
 # define KEY_ESC	53
 # define KEY_W		13
@@ -44,24 +45,37 @@ typedef	struct	s_env
 	void		*wolf_mem;
 }				t_env;
 
-typedef	struct			s_wolf
+typedef	struct		s_wolf
 {
-	int					map_choice;
-	unsigned long		*map;
-	float				pos_x;
-	float				pos_y;
-	float				view_x;
-	float				view_y;
-	float				slope;
-	float				rise;
-	float				run;
-	float				y_int;
-	float				distance;
-	int					inc_x;
-	int					inc_y;
-	int					side;
-	float				radians;
-}						t_wolf;
+	int				map_choice;
+	unsigned long	*map;
+	double			pos_x;
+	double			pos_y;
+	double			ray_x;
+	double			ray_y;
+	double			view_x;
+	double			view_y;
+
+}					t_wolf;
+
+// typedef	struct			s_wolf
+// {
+// 	int					map_choice;
+// 	unsigned long		*map;
+// 	float				pos_x;
+// 	float				pos_y;
+// 	float				view_x;
+// 	float				view_y;
+// 	float				slope;
+// 	float				rise;
+// 	float				run;
+// 	float				y_int;
+// 	float				distance;
+// 	int					inc_x;
+// 	int					inc_y;
+// 	int					side;
+// 	float				radians;
+// }						t_wolf;
 
 void				raycaster(t_env *env, t_wolf *wolf);
 int					key_controls(int keycode, t_env *env);
