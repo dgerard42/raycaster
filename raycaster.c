@@ -18,12 +18,13 @@ int						choose_color(t_wolf *wolf)
 
 	if (wolf->side == 0)
 	{
-		if ()
+		if (wolf->inc)
 	}
 	else
 	{
 
 	}
+	return (return_color);
 }
 
 void					draw_wall(t_env *env, t_wolf *wolf, int pixel)
