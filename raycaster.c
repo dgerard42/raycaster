@@ -40,48 +40,77 @@ void					draw_wall(t_env *env, t_wolf *wolf, int pixel)
 		env->pixels[pixel + (y++ * WIN_LEN)] = 0x000000;
 }
 
-void					shoot_ray(t_env *env, t_wolf *wolf)
+void				shoot_yray(t_wolf *wolf)
 {
+	double	wall_y;
 	double	wall_x;
+	double	distance;
+
+	wall_y = wolf->pos_y;
+	wall_x = wolf->pos_x;
+	while (1 && wolf->map[(int)wall_y])
+	{
+		if (wolf->inc_y == 1)
+		{
+			if (wolf->map[(int)wall_y] & (0b1 << (int)wall_x))
+				break;
+		}
+		else
+		{
+			if (wolf->map[(int)wall_y - 1] & (0b1 << ((int)wall_x + 0)))
+				break; //no inc
+		}
+		wall_y = (int)wall_y + wolf->inc_y;
+		wall_x = (wall_y - wolf->y_int) / wolf->slope;
+		if (wall_x > wolf->map_choice)
+			wall_x = wolf->map_choice;
+		if (wall_x < 0)
+			wall_x = 0;
+	}
+	distance = sqrt(powf(wall_x - wolf->pos_x, 2.0) + powf(wall_y - wolf->pos_y, 2.0));
+	if (distance < wolf->distance)
+	{
+		wolf->distance = distance;
+		wolf->side = 1;
+	}
+}
+
+void				shoot_xray(t_wolf *wolf)
+{
+	double 	wall_x;
 	double	wall_y;
 
 	wall_x = wolf->pos_x;
 	wall_y = wolf->pos_y;
 	while (1 && wolf->map[(int)wall_y])
 	{
-		if (((int)wall_y + 1) - wolf->pos_y < ((int)wall_x + 1) - wolf->pos_x)
+		if (wolf->inc_x == 1)
 		{
-			wolf->side = 0;
-			wall_y = (int)wall_y + wolf->inc_y;
-			wall_x = (wall_y - wolf->y_int) / wolf->slope;
-			if (wall_x > wolf->map_choice)
-				wall_x = wolf->map_choice;
-			else if (wall_x < 0)
-				wall_x = 0;
+			if (wolf->map[(int)wall_y + 0] & (0b1 << ((int)wall_x + 0)))
+				break; //no inc
 		}
 		else
 		{
-			wolf->side = 1;
-			wall_x = (int)wall_x + wolf->inc_x;
-			wall_y = (wolf->slope * wall_x) + wolf->y_int;
-			if (wall_y > 14.0)
-				wall_y = 14.0;
-			else if (wall_y < 0)
-				wall_y = 0;
+			if (wolf->map[(int)wall_y + 0] & (0b1 << ((int)wall_x - 1)))
+				break; //no inc
 		}
-		if (wolf->map[(int)wall_y] && wolf->map[(int)wall_y] & (0b1 << (int)wall_x))
-			break;
+		wall_x = (int)wall_x + wolf->inc_x; //typecasting as an int here allows an even increment to the next whole # from a possible decimaled starting point
+		wall_y = (wolf->slope * wall_x) + wolf->y_int;
+		if (wall_y > 14.0)
+			wall_y = 14.0;
+		if (wall_y < 0)
+			wall_y = 0;
 	}
 	wolf->distance = sqrt(powf(wall_x - wolf->pos_x, 2.0) + powf(wall_y - wolf->pos_y, 2.0));
-	printf("%f\n", wolf->distance);
+	wolf->side = 0;
 }
 
-void					aim_ray(t_env *env, t_wolf *wolf, int pixel)
+void					aim_ray(t_wolf *wolf, int pixel)
 {
 	double	rotate_view;
 
 	rotate_view = ((2 * pixel) / (double)WIN_LEN) - 1;
-	printf("rotate_view%f\n", rotate_view);
+	// printf("rotate_view%f\n", rotate_view);
 	wolf->ray_vector_x = wolf->vector_x + wolf->fov_x * rotate_view;
 	wolf->ray_vector_y = wolf->vector_y + wolf->fov_y * rotate_view;
 	wolf->inc_x = (wolf->ray_vector_x < 0) ? -1 : 1;
@@ -91,12 +120,12 @@ void					aim_ray(t_env *env, t_wolf *wolf, int pixel)
 	else
 		wolf->slope = ((wolf->pos_y + wolf->ray_vector_y) - wolf->pos_y) / ((wolf->pos_x + wolf->ray_vector_x) - wolf->pos_x);
 	wolf->y_int = -(wolf->slope * wolf->pos_x) + wolf->pos_y;
-	printf("slope%f\n", wolf->slope);
-	printf("xrayvec%f\n", wolf->ray_vector_x);
-	printf("yrayvec%f\n", wolf->ray_vector_y);
+	// printf("slope%f\n", wolf->slope);
+	// printf("xrayvec%f\n", wolf->ray_vector_x);
+	// printf("yrayvec%f\n", wolf->ray_vector_y);
 }
 
-void					ray_init(t_env *env, t_wolf *wolf)
+void					ray_init(t_wolf *wolf)
 {
 	int x;
 	int y;
@@ -125,12 +154,16 @@ void					raycaster(t_env *env, t_wolf *wolf)
 
 	pixel = 0;
 	if (env->reinit == false)
-		ray_init(env, wolf);
+		ray_init(wolf);
 	while (pixel < (WIN_LEN - 1))
 	{
-		aim_ray(env, wolf, pixel);
-		shoot_ray(env, wolf);
+		aim_ray(wolf, pixel);
+		shoot_xray(wolf);
+		shoot_yray(wolf);
 		draw_wall(env, wolf, pixel);
 		pixel++;
 	}
+	printf("side = %d\n", wolf->side);
+	printf("inc_x%d\n", wolf->inc_x);
+	printf("inc_y%d\n", wolf->inc_y);
 }

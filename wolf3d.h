@@ -23,6 +23,7 @@
 # define WIN_HI		800
 # define WIN_LEN	1200
 # define SCALE		64  //maybe implement an int scale instead of doubles later
+# define WOLF		(env->wolf_mem)
 
 # define KEY_ESC	53
 # define KEY_W		13
@@ -31,19 +32,6 @@
 # define KEY_D		2
 # define KEY_O		31
 # define KEY_P		35
-
-typedef	struct	s_env
-{
-	void		*mlx;
-	void		*window;
-	void		*image;
-	int			*pixels;
-	int			bits_per_pixel;
-	int			size_line;
-	int			endian;
-	bool		reinit;
-	void		*wolf_mem;
-}				t_env;
 
 typedef	struct		s_wolf
 {
@@ -57,13 +45,26 @@ typedef	struct		s_wolf
 	double			fov_y;
 	double			ray_vector_x;
 	double			ray_vector_y;
-	double			inc_x;
-	double			inc_y;
+	int				inc_x;
+	int				inc_y;
 	double			slope;
 	double			y_int;
 	double			distance;
 	int				side;
 }					t_wolf;
+
+typedef	struct	s_env
+{
+	void		*mlx;
+	void		*window;
+	void		*image;
+	int			*pixels;
+	int			bits_per_pixel;
+	int			size_line;
+	int			endian;
+	bool		reinit;
+	t_wolf		*wolf_mem;
+}				t_env;
 
 void				raycaster(t_env *env, t_wolf *wolf);
 int					key_controls(int keycode, t_env *env);

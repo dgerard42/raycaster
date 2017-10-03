@@ -6,7 +6,7 @@
 #    By: dgerard <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/08/27 19:15:03 by dgerard           #+#    #+#              #
-#    Updated: 2017/09/18 20:17:29 by dgerard          ###   ########.fr        #
+#    Updated: 2017/10/02 15:40:44 by dgerard          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -35,11 +35,11 @@ OFILES = $(addprefix $(ODIR)/,$(SRCS:.c=.o))
 LIBFTO = $(LIBFT:.c=.o)
 
 $(ODIR)/%.o: %.c
-	@gcc $(CFLAGS) -c $^ -o $@
+	@gcc $(FLAGS) -c $^ -o $@
 	@/bin/echo -n "❂❂❂❂❂"
 
 %.o: %.c
-	@gcc $(CFLAGS) -c $^ -o $@
+	@gcc $(FLAGS) -c $^ -o $@
 	@/bin/echo -n "❂❂❂❂❂"
 
 all: $(NAME)

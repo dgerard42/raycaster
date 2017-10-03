@@ -12,7 +12,7 @@
 
 #include "wolf3d.h"
 
-void			minimap_debugger(t_env *env, t_wolf *wolf)
+void			minimap_debugger(t_wolf *wolf)
 {
 	int x;
 	int y = 0;
@@ -54,7 +54,8 @@ void			reinit(t_env *env, t_wolf *wolf)
 	raycaster(env, wolf);
 	// printf("here before put img to window\n");
 	mlx_put_image_to_window(env->mlx, env->window, env->image, 0, 0);
-	minimap_debugger(env, wolf);
+	minimap_debugger(wolf);
+	printf("here\n");
 }
 
 void		map_0(t_wolf *wolf)
