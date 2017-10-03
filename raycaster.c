@@ -12,17 +12,53 @@
 
 #include "wolf3d.h"
 
+int						fade_color(int color)
+{
+	int red;
+	int	green;
+	int	blue;
+	int return_color;
+
+	return_color = 0;
+	// printf("original%x\n", color);
+	blue = color % 0x100;
+	green = (color % 0x10000) / 0x100;
+	red = (color % 0x1000000) / 0x10000;
+	// printf("r%d, g%d, b%d\n", red, green, blue);
+	red = (red - 1 > 0) ? red - 1 : red;
+	blue = (blue - 1 > 0) ? blue - 1 : blue;
+	green = (green - 1 > 0) ? green - 1 : green;
+	// printf("r%d, g%d, b%d\n", red, green, blue);
+	return_color += red * 0x10000;
+	return_color += green * 0x100;
+	return_color += blue;
+	// printf("darker%x\n", return_color);
+	return(return_color);
+}
+
 int						choose_color(t_wolf *wolf)
 {
 	int return_color;
 
+	return_color = 0x00FF00;
 	if (wolf->side == 0)
 	{
-		if (wolf->inc)
+		if (wolf->inc_x == 1)
+			return_color = 0xbff0ff;
+		else if (wolf->inc_x == -1)
+			return_color = 0xbadaff;
 	}
-	else
+	else if (wolf->side == 1)
 	{
-
+		if (wolf->inc_y == 1)
+			return_color = 0xaf9dff;
+		else if (wolf->inc_y == -1)
+			return_color = 0xb080ee;
+	}
+	while (return_color > 0x000000 && wolf->distance > 0.0)
+	{
+		return_color = fade_color(return_color);
+		wolf->distance -= 0.1;
 	}
 	return (return_color);
 }
@@ -41,15 +77,15 @@ void					draw_wall(t_env *env, t_wolf *wolf, int pixel)
 	// 	color = 0x000000;
 	// if (wolf->side == 1 && color - 32 > 0x000000)
 	// 	color -= 32;
-	color = choose_color(wolf);
 	wall_hi = (wolf->distance == 0) ? WIN_HI - 6 : WIN_HI / wolf->distance;
 	sky = (WIN_HI - wall_hi) / 2;
+	color = choose_color(wolf);
 	while (y < sky)
 		env->pixels[pixel + (y++ * WIN_LEN)] = 0x000000;
 	while (wall_hi-- > 0)
 		env->pixels[pixel + (y++ * WIN_LEN)] = color;
 	while (y < (WIN_HI - 1))
-		env->pixels[pixel + (y++ * WIN_LEN)] = 0x581845;
+		env->pixels[pixel + (y++ * WIN_LEN)] = 0x9D54D0;
 }
 
 void				shoot_yray(t_wolf *wolf)
