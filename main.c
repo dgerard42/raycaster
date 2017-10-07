@@ -6,7 +6,7 @@
 /*   By: dgerard <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/28 12:20:54 by dgerard           #+#    #+#             */
-/*   Updated: 2017/09/04 17:04:28 by dgerard          ###   ########.fr       */
+/*   Updated: 2017/10/06 16:05:03 by dgerard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,19 +43,23 @@ void			minimap_debugger(t_wolf *wolf)
 
 void			reinit(t_env *env, t_wolf *wolf)
 {
+	int len;
+	int hi;
+
 	if (env->reinit == true)
 		mlx_destroy_image(env->mlx, env->image);
 	else
 		env->window = mlx_new_window(env->mlx, WIN_LEN, WIN_HI, "welcome to hell");
-	env->image = mlx_new_image(env->mlx, WIN_LEN, WIN_HI);
-	env->pixels = (int *)mlx_get_data_addr(env->image, &env->bits_per_pixel,
-		&env->size_line, &env->endian);
-	// printf("starting seg\n");
+	// env->image = mlx_new_image(env->mlx, WIN_LEN, WIN_HI);
+	env->image = mlx_xpm_file_to_image(env->mlx, "/nfs/2017/d/dgerard/Desktop/stars_1201_800.xpm", &len, &hi);
+	printf("%d, %d\n", len, hi);
+	env->pixels = (int *)mlx_get_data_addr(env->image, &env->bits_per_pixel, &env->size_line, &env->endian);
+	printf("here0\n");
 	raycaster(env, wolf);
-	// printf("here before put img to window\n");
+	printf("here1\n");
 	mlx_put_image_to_window(env->mlx, env->window, env->image, 0, 0);
 	minimap_debugger(wolf);
-	printf("here\n");
+	printf("here2\n");
 }
 
 void		map_0(t_wolf *wolf)
@@ -85,20 +89,36 @@ void		map_1(t_wolf *wolf)
 	// printf("map 1!!\n");
 	wolf->map_choice = 17;
 //	wolf->map = (unsigned long *)malloc(sizeof(unsigned long) * 15);
+	// wolf->map[0x0] = 0b111111111111111111;
+	// wolf->map[0x1] = 0b101100000010000001;
+	// wolf->map[0x2] = 0b100001011000101101;
+	// wolf->map[0x3] = 0b110111001101100101;
+	// wolf->map[0x4] = 0b100001100100101111;
+	// wolf->map[0x5] = 0b101101101110100001;
+	// wolf->map[0x6] = 0b100101100010111101;
+	// wolf->map[0x7] = 0b110100111010001101;
+	// wolf->map[0x8] = 0b110110100011100001;
+	// wolf->map[0x9] = 0b110010001110001011;
+	// wolf->map[0xa] = 0b111010100010111011;
+	// wolf->map[0xb] = 0b100010111011100001;
+	// wolf->map[0xc] = 0b101110001000111111;
+	// wolf->map[0xd] = 0b100011011110000001;
+	// wolf->map[0xe] = 0b111111111111111111;
+	// wolf->map[0xf] = 0;
 	wolf->map[0x0] = 0b111111111111111111;
-	wolf->map[0x1] = 0b101100000010000001;
-	wolf->map[0x2] = 0b100001011000101101;
-	wolf->map[0x3] = 0b110111001101100101;
-	wolf->map[0x4] = 0b100001100100101111;
-	wolf->map[0x5] = 0b101101101110100001;
-	wolf->map[0x6] = 0b100101100010111101;
-	wolf->map[0x7] = 0b110100111010001101;
-	wolf->map[0x8] = 0b110110100011100001;
-	wolf->map[0x9] = 0b110010001110001011;
-	wolf->map[0xa] = 0b111010100010111011;
-	wolf->map[0xb] = 0b100010111011100001;
-	wolf->map[0xc] = 0b101110001000111111;
-	wolf->map[0xd] = 0b100011011110000001;
+	wolf->map[0x1] = 0b100010000000000001;
+	wolf->map[0x2] = 0b100010101010000001;
+	wolf->map[0x3] = 0b100010000000011001;
+	wolf->map[0x4] = 0b100010001110011001;
+	wolf->map[0x5] = 0b100011001010011001;
+	wolf->map[0x6] = 0b100000001000011001;
+	wolf->map[0x7] = 0b100000001000011001;
+	wolf->map[0x8] = 0b111100111111111001;
+	wolf->map[0x9] = 0b100100100000011001;
+	wolf->map[0xa] = 0b100100100000011001;
+	wolf->map[0xb] = 0b100111100010000001;
+	wolf->map[0xc] = 0b100000000010000001;
+	wolf->map[0xd] = 0b100000000010000001;
 	wolf->map[0xe] = 0b111111111111111111;
 	wolf->map[0xf] = 0;
 }

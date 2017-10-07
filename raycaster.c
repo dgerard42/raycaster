@@ -6,7 +6,7 @@
 /*   By: dgerard <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/01 15:05:31 by dgerard           #+#    #+#             */
-/*   Updated: 2017/10/01 15:05:34 by dgerard          ###   ########.fr       */
+/*   Updated: 2017/10/06 17:03:15 by dgerard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,23 +42,13 @@ int						choose_color(t_wolf *wolf)
 
 	return_color = 0x00FF00;
 	if (wolf->side == 0)
-	{
-		if (wolf->inc_x == 1)
-			return_color = 0xbff0ff;
-		else if (wolf->inc_x == -1)
-			return_color = 0xbadaff;
-	}
+		return_color = (wolf->inc_x == 1) ? 0xa2bbff : 0xb080ee;
 	else if (wolf->side == 1)
-	{
-		if (wolf->inc_y == 1)
-			return_color = 0xaf9dff;
-		else if (wolf->inc_y == -1)
-			return_color = 0xb080ee;
-	}
+		return_color = (wolf->inc_y == 1) ? 0xaf9dff : 0xbff0ff;
 	while (return_color > 0x000000 && wolf->distance > 0.0)
 	{
 		return_color = fade_color(return_color);
-		wolf->distance -= 0.1;
+		wolf->distance -= 0.08;
 	}
 	return (return_color);
 }
@@ -71,21 +61,20 @@ void					draw_wall(t_env *env, t_wolf *wolf, int pixel)
 	int	color;
 
 	y = 0;
-	// if (0x0000FF - (wolf->distance * 12) > 0x000000)
-	// 	color = 0x0000FF - (wolf->distance * 12);
-	// else
-	// 	color = 0x000000;
-	// if (wolf->side == 1 && color - 32 > 0x000000)
-	// 	color -= 32;
 	wall_hi = (wolf->distance == 0) ? WIN_HI - 6 : WIN_HI / wolf->distance;
+	while (wall_hi > (WIN_HI - 1))
+		wall_hi--;
 	sky = (WIN_HI - wall_hi) / 2;
 	color = choose_color(wolf);
 	while (y < sky)
-		env->pixels[pixel + (y++ * WIN_LEN)] = 0x000000;
+	{
+		// env->pixels[pixel + (y++ * WIN_LEN)] = 0x000000;
+		y++;
+	}
 	while (wall_hi-- > 0)
 		env->pixels[pixel + (y++ * WIN_LEN)] = color;
 	while (y < (WIN_HI - 1))
-		env->pixels[pixel + (y++ * WIN_LEN)] = 0x9D54D0;
+		env->pixels[pixel + (y++ * WIN_LEN)] = 0x000000;
 }
 
 void				shoot_yray(t_wolf *wolf)
@@ -102,7 +91,7 @@ void				shoot_yray(t_wolf *wolf)
 			if (wolf->map[(int)wall_y] & (0b1 << (int)wall_x))
 				break;
 		if (wolf->inc_y == -1)
-			if (wolf->map[(int)wall_y - 1] & (0b1 << ((int)wall_x + 0)))
+			if (wolf->map[(int)wall_y - 1] & (0b1 << (int)wall_x))
 				break;
 		wall_y = (int)wall_y + wolf->inc_y;
 		wall_x = (wall_y - wolf->y_int) / wolf->slope;
@@ -124,15 +113,15 @@ void				shoot_xray(t_wolf *wolf)
 	double 	wall_x;
 	double	wall_y;
 
-	wall_x = wolf->pos_x;
 	wall_y = wolf->pos_y;
+	wall_x = wolf->pos_x;
 	while (1 && wolf->map[(int)wall_y])
 	{
 		if (wolf->inc_x == 1)
-			if (wolf->map[(int)wall_y + 0] & (0b1 << ((int)wall_x + 0)))
+			if (wolf->map[(int)wall_y] & (0b1 << (int)wall_x))
 				break;
 		if (wolf->inc_x == -1)
-			if (wolf->map[(int)wall_y + 0] & (0b1 << ((int)wall_x - 1)))
+			if (wolf->map[(int)wall_y] & (0b1 << ((int)wall_x - 1)))
 				break;
 		wall_x = (int)wall_x + wolf->inc_x; //typecasting as an int here allows an even increment to the next whole # from a possible decimaled starting point
 		wall_y = (wolf->slope * wall_x) + wolf->y_int;
@@ -200,7 +189,7 @@ void					raycaster(t_env *env, t_wolf *wolf)
 		draw_wall(env, wolf, pixel);
 		pixel++;
 	}
-	printf("side = %d\n", wolf->side);
-	printf("inc_x%d\n", wolf->inc_x);
-	printf("inc_y%d\n", wolf->inc_y);
+	// printf("side = %d\n", wolf->side);
+	// printf("inc_x%d\n", wolf->inc_x);
+	// printf("inc_y%d\n", wolf->inc_y);
 }

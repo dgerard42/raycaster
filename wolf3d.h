@@ -6,7 +6,7 @@
 /*   By: dgerard <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/28 11:29:46 by dgerard           #+#    #+#             */
-/*   Updated: 2017/08/28 11:59:10 by dgerard          ###   ########.fr       */
+/*   Updated: 2017/10/06 16:05:27 by dgerard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@
 # define WIN_LEN	1200
 # define SCALE		64  //maybe implement an int scale instead of doubles later
 # define WOLF		(env->wolf_mem)
+# define SPEED		0.1
 
 # define KEY_ESC	53
 # define KEY_W		13
@@ -53,18 +54,19 @@ typedef	struct		s_wolf
 	int				side;
 }					t_wolf;
 
-typedef	struct	s_env
+typedef	struct		s_env
 {
-	void		*mlx;
-	void		*window;
-	void		*image;
-	int			*pixels;
-	int			bits_per_pixel;
-	int			size_line;
-	int			endian;
-	bool		reinit;
-	t_wolf		*wolf_mem;
-}				t_env;
+	void			*mlx;
+	void			*window;
+	void			*image;
+	// unsigned char			*pixels;
+	int				*pixels;
+	int				bits_per_pixel;
+	int				size_line;
+	int				endian;
+	bool			reinit;
+	t_wolf			*wolf_mem;
+}					t_env;
 
 void				raycaster(t_env *env, t_wolf *wolf);
 int					key_controls(int keycode, t_env *env);
