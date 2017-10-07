@@ -38,19 +38,39 @@ int						fade_color(int color)
 
 int						choose_color(t_wolf *wolf)
 {
-	int return_color;
+	int 	return_color;
+	double	dist_tmp;
 
 	return_color = 0x00FF00;
+	dist_tmp = wolf->distance;
 	if (wolf->side == 0)
 		return_color = (wolf->inc_x == 1) ? 0xa2bbff : 0xb080ee;
 	else if (wolf->side == 1)
 		return_color = (wolf->inc_y == 1) ? 0xaf9dff : 0xbff0ff;
-	while (return_color > 0x000000 && wolf->distance > 0.0)
+	while (return_color > 0x000000 && dist_tmp > 0.0)
 	{
 		return_color = fade_color(return_color);
-		wolf->distance -= 0.08;
+		dist_tmp -= 0.08;
 	}
 	return (return_color);
+}
+
+int						fake_rand(t_wolf *wolf, int seed)
+{
+	int ret;
+	int seed_1;
+	int seed_2;
+
+	seed_1 = seed % 9;
+	// printf("seed 1%d\n", seed_1);
+	seed_2 = (int)(wolf->distance * 10000 + 1) % 9;
+	// printf("seed 2%d\n", seed_2);
+	ret = wolf->stars[seed_1];
+	wolf->stars[seed_1] = wolf->stars[seed_2];
+	wolf->stars[seed_2] = ret;
+	ret = ret + 73;
+	printf("%d\n", ret);
+	return(ret);
 }
 
 void					draw_wall(t_env *env, t_wolf *wolf, int pixel)
@@ -61,6 +81,7 @@ void					draw_wall(t_env *env, t_wolf *wolf, int pixel)
 	int	color;
 
 	y = 0;
+	wolf->seed = 42;
 	wall_hi = (wolf->distance == 0) ? WIN_HI - 6 : WIN_HI / wolf->distance;
 	while (wall_hi > (WIN_HI - 1))
 		wall_hi--;
@@ -77,8 +98,10 @@ void					draw_wall(t_env *env, t_wolf *wolf, int pixel)
 	}
 	while (y < (WIN_HI - 1))
 	{
-		env->pixels[pixel + (y++ * WIN_LEN)] = 0x000000;
-		// y++;
+		if (pixel % fake_rand(wolf, wolf->seed++))
+			env->pixels[pixel + (y++ * WIN_LEN)] = 0x000000;
+		else
+			y++;
 	}
 }
 

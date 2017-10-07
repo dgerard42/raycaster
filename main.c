@@ -160,6 +160,21 @@ void		map_2(t_wolf *wolf)
 	wolf->map[0xf] = 0;
 }
 
+void		fake_rand_setup(t_wolf *wolf)
+{
+	wolf->stars = (int *)malloc(sizeof(int) * 10);
+	wolf->stars[0] = 7;
+	wolf->stars[1] = 3;
+	wolf->stars[2] = 9;
+	wolf->stars[3] = 10;
+	wolf->stars[4] = 5;
+	wolf->stars[5] = 1;
+	wolf->stars[6] = 8;
+	wolf->stars[7] = 2;
+	wolf->stars[8] = 6;
+	wolf->stars[9] = 4;
+}
+
 int			main(int argc, char **argv)
 {
 	t_env	env;
@@ -172,6 +187,7 @@ int			main(int argc, char **argv)
 	env.wolf_mem = &wolf;
 	//implement parameter managment and a menu later, this is v sloppy open to segfaults
 	wolf.map = (unsigned long *)malloc(sizeof(unsigned long) * 16);
+	fake_rand_setup(&wolf);
 	if (wolf.map_choice == 0)
 		map_0(&wolf);
 	else if (wolf.map_choice == 1)

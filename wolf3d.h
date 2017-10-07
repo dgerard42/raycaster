@@ -17,6 +17,8 @@
 # include "minilibx/mlx.h"
 # include <stdbool.h>
 # include <math.h>
+// # include <time.h>
+// # include <stdlib.h>
 # include <unistd.h> //again, rm at end
 # include <stdio.h> //rm this at the end
 
@@ -52,6 +54,8 @@ typedef	struct		s_wolf
 	double			y_int;
 	double			distance;
 	int				side;
+	int				*stars;
+	int				seed;
 }					t_wolf;
 
 typedef	struct		s_env
