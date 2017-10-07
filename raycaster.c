@@ -72,9 +72,14 @@ void					draw_wall(t_env *env, t_wolf *wolf, int pixel)
 		y++;
 	}
 	while (wall_hi-- > 0)
+	{
 		env->pixels[pixel + (y++ * WIN_LEN)] = color;
+	}
 	while (y < (WIN_HI - 1))
+	{
 		env->pixels[pixel + (y++ * WIN_LEN)] = 0x000000;
+		// y++;
+	}
 }
 
 void				shoot_yray(t_wolf *wolf)

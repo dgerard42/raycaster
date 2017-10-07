@@ -21,7 +21,7 @@
 # include <stdio.h> //rm this at the end
 
 # define WIN_HI		800
-# define WIN_LEN	1200
+# define WIN_LEN	1201
 # define SCALE		64  //maybe implement an int scale instead of doubles later
 # define WOLF		(env->wolf_mem)
 # define SPEED		0.1
