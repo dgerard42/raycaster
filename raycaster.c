@@ -20,19 +20,15 @@ int						fade_color(int color)
 	int return_color;
 
 	return_color = 0;
-	// printf("original%x\n", color);
 	blue = color % 0x100;
 	green = (color % 0x10000) / 0x100;
 	red = (color % 0x1000000) / 0x10000;
-	// printf("r%d, g%d, b%d\n", red, green, blue);
 	red = (red - 1 > 0) ? red - 1 : red;
 	blue = (blue - 1 > 0) ? blue - 1 : blue;
 	green = (green - 1 > 0) ? green - 1 : green;
-	// printf("r%d, g%d, b%d\n", red, green, blue);
 	return_color += red * 0x10000;
 	return_color += green * 0x100;
 	return_color += blue;
-	// printf("darker%x\n", return_color);
 	return(return_color);
 }
 
@@ -90,13 +86,9 @@ void					draw_wall(t_env *env, t_wolf *wolf, int pixel)
 	sky = (WIN_HI - wall_hi) / 2;
 	color = choose_color(wolf);
 	while (y < sky)
-	{
 		y++;
-	}
 	while (wall_hi-- > 0)
-	{
 		env->pixels[pixel + (y++ * WIN_LEN)] = color;
-	}
 	while (y < (WIN_HI - 1))
 	{
 		if (pixel % fake_rand(10, 400, seed++) || y % fake_rand(10, 400, seed++))
@@ -152,7 +144,7 @@ void				shoot_xray(t_wolf *wolf)
 		if (wolf->inc_x == -1)
 			if (wolf->map[(int)wall_y] & (0b1 << ((int)wall_x - 1)))
 				break;
-		wall_x = (int)wall_x + wolf->inc_x; //typecasting as an int here allows an even increment to the next whole # from a possible decimaled starting point
+		wall_x = (int)wall_x + wolf->inc_x;
 		wall_y = (wolf->slope * wall_x) + wolf->y_int;
 		if (wall_y > 14.0)
 			wall_y = 14.0;
@@ -218,7 +210,4 @@ void					raycaster(t_env *env, t_wolf *wolf)
 		draw_wall(env, wolf, pixel);
 		pixel++;
 	}
-	// printf("side = %d\n", wolf->side);
-	// printf("inc_x%d\n", wolf->inc_x);
-	// printf("inc_y%d\n", wolf->inc_y);
 }

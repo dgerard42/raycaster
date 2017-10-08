@@ -21,6 +21,8 @@ SRCS = main.c\
 LIBFT = libft/ft_power.c\
 		libft/ft_atoi.c\
 		libft/ft_memdel.c\
+		libft/ft_putchar.c\
+		libft/ft_putstr.c\
 
 LIBMLX = minilibx/libmlx.a
 
