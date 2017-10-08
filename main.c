@@ -49,9 +49,12 @@ void			reinit(t_env *env, t_wolf *wolf)
 	if (env->reinit == true)
 		mlx_destroy_image(env->mlx, env->image);
 	else
+	{
+		system("afplay /nfs/2017/d/dgerard/cadet_archive/wolf3d/alien_pollen.mp3&");
 		env->window = mlx_new_window(env->mlx, WIN_LEN, WIN_HI, "welcome to hell");
+	}
 	// env->image = mlx_new_image(env->mlx, WIN_LEN, WIN_HI);
-	env->image = mlx_xpm_file_to_image(env->mlx, "/nfs/2017/d/dgerard/Desktop/stars_1201_800.xpm", &len, &hi);
+	env->image = mlx_xpm_file_to_image(env->mlx, "/nfs/2017/d/dgerard/cadet_archive/wolf3d/stars_1201_800.xpm", &len, &hi);
 	printf("%d, %d\n", len, hi);
 	env->pixels = (int *)mlx_get_data_addr(env->image, &env->bits_per_pixel, &env->size_line, &env->endian);
 	printf("here0\n");
@@ -160,21 +163,6 @@ void		map_2(t_wolf *wolf)
 	wolf->map[0xf] = 0;
 }
 
-void		fake_rand_setup(t_wolf *wolf)
-{
-	wolf->stars = (int *)malloc(sizeof(int) * 10);
-	wolf->stars[0] = 7;
-	wolf->stars[1] = 3;
-	wolf->stars[2] = 9;
-	wolf->stars[3] = 10;
-	wolf->stars[4] = 5;
-	wolf->stars[5] = 1;
-	wolf->stars[6] = 8;
-	wolf->stars[7] = 2;
-	wolf->stars[8] = 6;
-	wolf->stars[9] = 4;
-}
-
 int			main(int argc, char **argv)
 {
 	t_env	env;
@@ -187,7 +175,7 @@ int			main(int argc, char **argv)
 	env.wolf_mem = &wolf;
 	//implement parameter managment and a menu later, this is v sloppy open to segfaults
 	wolf.map = (unsigned long *)malloc(sizeof(unsigned long) * 16);
-	fake_rand_setup(&wolf);
+	// fake_rand_setup(&wolf);
 	if (wolf.map_choice == 0)
 		map_0(&wolf);
 	else if (wolf.map_choice == 1)

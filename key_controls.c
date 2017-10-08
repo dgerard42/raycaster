@@ -17,6 +17,7 @@ void				exit_wolf3d(t_env *env)
 	mlx_destroy_image(env->mlx, env->image);
 	mlx_destroy_window(env->mlx, env->window);
 	ft_memdel((void **)&WOLF->map);
+	system("killall afplay");
 	exit(0);
 }
 

@@ -54,8 +54,8 @@ typedef	struct		s_wolf
 	double			y_int;
 	double			distance;
 	int				side;
-	int				*stars;
-	int				seed;
+	// int				*stars;
+	// int				seed;
 }					t_wolf;
 
 typedef	struct		s_env

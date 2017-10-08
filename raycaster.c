@@ -55,22 +55,22 @@ int						choose_color(t_wolf *wolf)
 	return (return_color);
 }
 
-int						fake_rand(t_wolf *wolf, int seed)
+int						fake_rand(unsigned int range_lo, unsigned int range_hi, unsigned int seed)
 {
-	int ret;
-	int seed_1;
-	int seed_2;
+	int			*pointer[1];
+	unsigned int bit;
+	unsigned int revuelto;
 
-	seed_1 = seed % 9;
-	// printf("seed 1%d\n", seed_1);
-	seed_2 = (int)(wolf->distance * 10000 + 1) % 9;
-	// printf("seed 2%d\n", seed_2);
-	ret = wolf->stars[seed_1];
-	wolf->stars[seed_1] = wolf->stars[seed_2];
-	wolf->stars[seed_2] = ret;
-	ret = ret + 73;
-	printf("%d\n", ret);
-	return(ret);
+	bit = 0;
+	revuelto = 0;
+	if (range_lo == range_hi)
+		return (range_lo);
+	revuelto = revuelto^(int)pointer;
+	bit = ((seed >> 0) ^ (seed >> 2) ^ (seed >> 3) ^ (seed >> 5)) & 1;
+	seed = ((bit << 15) | (seed >> 1) | revuelto) % range_hi;
+	while (seed < range_lo)
+	 	seed = seed + range_hi - range_lo;
+	return ((int)seed);
 }
 
 void					draw_wall(t_env *env, t_wolf *wolf, int pixel)
@@ -79,9 +79,10 @@ void					draw_wall(t_env *env, t_wolf *wolf, int pixel)
 	int	sky;
 	int	wall_hi;
 	int	color;
+	int seed;
 
 	y = 0;
-	wolf->seed = 42;
+	seed = 38947;
 	wall_hi = (wolf->distance == 0) ? WIN_HI - 6 : WIN_HI / wolf->distance;
 	while (wall_hi > (WIN_HI - 1))
 		wall_hi--;
@@ -89,7 +90,6 @@ void					draw_wall(t_env *env, t_wolf *wolf, int pixel)
 	color = choose_color(wolf);
 	while (y < sky)
 	{
-		// env->pixels[pixel + (y++ * WIN_LEN)] = 0x000000;
 		y++;
 	}
 	while (wall_hi-- > 0)
@@ -98,10 +98,10 @@ void					draw_wall(t_env *env, t_wolf *wolf, int pixel)
 	}
 	while (y < (WIN_HI - 1))
 	{
-		if (pixel % fake_rand(wolf, wolf->seed++))
+		if (pixel % fake_rand(10, 400, seed++) || y % fake_rand(10, 400, seed++))
 			env->pixels[pixel + (y++ * WIN_LEN)] = 0x000000;
 		else
-			y++;
+			env->pixels[pixel + (y++ * WIN_LEN)] = 0xFFFFFF;
 	}
 }
 
