@@ -57,15 +57,16 @@ int						choose_color(t_wolf *wolf)
 
 int						fake_rand(unsigned int range_lo, unsigned int range_hi, unsigned int seed)
 {
-	int			*pointer[1];
-	unsigned int bit;
-	unsigned int revuelto;
+	int				pointer;
+	unsigned int	bit;
+	unsigned int 	revuelto;
 
 	bit = 0;
 	revuelto = 0;
+	pointer = 293482;
 	if (range_lo == range_hi)
 		return (range_lo);
-	revuelto = revuelto^(int)pointer;
+	revuelto = revuelto^pointer;
 	bit = ((seed >> 0) ^ (seed >> 2) ^ (seed >> 3) ^ (seed >> 5)) & 1;
 	seed = ((bit << 15) | (seed >> 1) | revuelto) % range_hi;
 	while (seed < range_lo)
