@@ -46,10 +46,10 @@ void			minimap(t_wolf *wolf)
 		ft_putchar('\n');
 		y++;
 	}
-	// ft_printf("player position = (%d, %d)\n", (int)wolf->pos_x,
-		// (int)wolf->pos_y);
-	// ft_printf("view vector = (%d, %d)\n", (int)wolf->pos_x +
-		// (int)wolf->ray_vector_x, (int)wolf->pos_y + (int)wolf->ray_vector_y);
+	ft_printf("player position = (%d, %d)\n", (int)wolf->pos_x,
+		(int)wolf->pos_y);
+	ft_printf("view vector = (%d, %d)\n", (int)wolf->pos_x +
+		(int)wolf->ray_vector_x, (int)wolf->pos_y + (int)wolf->ray_vector_y);
 }
 
 void			reinit(t_env *env, t_wolf *wolf)
@@ -83,6 +83,7 @@ void			handle_parameters(t_wolf *wolf, int argc, char **parameters)
 		else if (ft_strequ(parameters[1], "box"))
 			map_2(wolf);
 	}
+	printf("%d\n", argc);
 	if (argc != 2 || wolf->map_choice == 42)
 	{
 		ft_putstr("Error. Invalid input.\n");

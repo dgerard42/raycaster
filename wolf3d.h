@@ -25,6 +25,7 @@
 # define WOLF		(env->wolf_mem)
 # define SPEED		0.1
 
+
 # define KEY_ESC	53
 # define KEY_W		13
 # define KEY_S		1
