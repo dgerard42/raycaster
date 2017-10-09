@@ -72,10 +72,16 @@ int					key_controls(int keycode, t_env *env)
 {
 	if (keycode == KEY_ESC)
 		exit_wolf3d(env);
-	if (keycode == KEY_W || keycode == KEY_S)
+	else if (keycode == KEY_W || keycode == KEY_S)
 		movement_controls(env, keycode);
-	if (keycode == KEY_D || keycode == KEY_A)
+	else if (keycode == KEY_D || keycode == KEY_A)
 		rotation_controls(env, keycode);
+	else if (keycode == KEY_M)
+	{
+		WOLF->minimap = (WOLF->minimap == true) ? false : true;
+		if (WOLF->minimap == false)
+			welcome_user();
+	}
 	env->reinit = true;
 	reinit(env, env->wolf_mem);
 	return (0);

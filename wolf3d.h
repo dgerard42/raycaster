@@ -14,13 +14,10 @@
 # define WOLF3D_H
 
 # include "libft/libft.h"
+# include "printf/ft_printf.h"
 # include "minilibx/mlx.h"
 # include <stdbool.h>
 # include <math.h>
-// # include <time.h>
-// # include <stdlib.h>
-# include <unistd.h> //again, rm at end
-# include <stdio.h> //rm this at the end
 
 # define WIN_HI		800
 # define WIN_LEN	1201
@@ -33,8 +30,7 @@
 # define KEY_S		1
 # define KEY_A		0
 # define KEY_D		2
-# define KEY_O		31
-# define KEY_P		35
+# define KEY_M      46
 
 typedef	struct		s_wolf
 {
@@ -54,8 +50,7 @@ typedef	struct		s_wolf
 	double			y_int;
 	double			distance;
 	int				side;
-	// int				*stars;
-	// int				seed;
+	bool			minimap;
 }					t_wolf;
 
 typedef	struct		s_env
@@ -63,7 +58,6 @@ typedef	struct		s_env
 	void			*mlx;
 	void			*window;
 	void			*image;
-	// unsigned char			*pixels;
 	int				*pixels;
 	int				bits_per_pixel;
 	int				size_line;
@@ -75,7 +69,9 @@ typedef	struct		s_env
 void				raycaster(t_env *env, t_wolf *wolf);
 int					key_controls(int keycode, t_env *env);
 void				reinit(t_env *env, t_wolf *wolf);
-//remember to rm this prototype VV
-int					ft_printf(const char *format, ...);
+void				welcome_user(void);
+void				map_0(t_wolf *wolf);
+void				map_1(t_wolf *wolf);
+void				map_2(t_wolf *wolf);
 
 #endif
