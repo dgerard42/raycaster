@@ -106,7 +106,7 @@ void				shoot_yray(t_wolf *wolf)
 	double	wall_x;
 	double	distance;
 
-	wall_y = wolf->pos_y;
+	wall_y = (wolf->inc_y == - 1) ? wolf->pos_y + 1 : wolf->pos_y;
 	wall_x = wolf->pos_x;
 	while (1 && wolf->map[(int)wall_y])
 	{
@@ -116,6 +116,13 @@ void				shoot_yray(t_wolf *wolf)
 		if (wolf->inc_y == -1)
 			if (wolf->map[(int)wall_y - 1] & (0b1 << (int)wall_x))
 				break;
+		// if (wolf->map[(int)wall_y] & (0b1 << (int)wall_x))
+		// {
+		// 	if (wolf->inc_y == 1)
+		// 		break;
+		// 	else if (wolf->map[(int)(wall_y + 0.5)] & (0b1 << (int)wall_x))
+		// 		break;
+		// }
 		wall_y = (int)wall_y + wolf->inc_y;
 		wall_x = (wall_y - wolf->y_int) / wolf->slope;
 		if (wall_x > wolf->map_choice)
@@ -137,7 +144,7 @@ void				shoot_xray(t_wolf *wolf)
 	double	wall_y;
 
 	wall_y = wolf->pos_y;
-	wall_x = wolf->pos_x;
+	wall_x = (wolf->inc_x == -1) ? wolf->pos_x + 1 : wolf->pos_x;
 	while (1 && wolf->map[(int)wall_y])
 	{
 		if (wolf->inc_x == 1)
@@ -146,6 +153,13 @@ void				shoot_xray(t_wolf *wolf)
 		if (wolf->inc_x == -1)
 			if (wolf->map[(int)wall_y] & (0b1 << ((int)wall_x - 1)))
 				break;
+		// if (wolf->map[(int)wall_y] & (0b1 << (int)wall_x))
+		// {
+		// 	if (wolf->inc_x == 1)
+		// 		break;
+		// 	else if (wolf->map[(int)wall_y] & (0b1 << (int)(wall_x + 0.5)))
+		// 		break;
+		// }
 		wall_x = (int)wall_x + wolf->inc_x;
 		wall_y = (wolf->slope * wall_x) + wolf->y_int;
 		if (wall_y > 14.0)

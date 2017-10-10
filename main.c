@@ -105,7 +105,7 @@ int				main(int argc, char **argv)
 	env.wolf_mem = &wolf;
 	env.reinit = false;
 	wolf.minimap = false;
-	system("afplay ./support_files/alien_pollen.mp3&");
+	// system("afplay ./support_files/alien_pollen.mp3&");
 	reinit(&env, &wolf);
 	welcome_user();
 	mlx_hook(env.window, 2, 0, key_controls, (void *)&env);
