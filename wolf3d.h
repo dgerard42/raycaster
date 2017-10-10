@@ -18,10 +18,10 @@
 # include "minilibx/mlx.h"
 # include <stdbool.h>
 # include <math.h>
+# include <stdio.h>
 
 # define WIN_HI		800
 # define WIN_LEN	1201
-# define SCALE		64  //maybe implement an int scale instead of doubles later
 # define WOLF		(env->wolf_mem)
 # define SPEED		0.1
 
@@ -45,6 +45,8 @@ typedef	struct		s_wolf
 	double			fov_y;
 	double			ray_vector_x;
 	double			ray_vector_y;
+	double			ray_x;
+	double			ray_y;
 	int				inc_x;
 	int				inc_y;
 	double			slope;

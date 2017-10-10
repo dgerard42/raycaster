@@ -41,8 +41,10 @@ int						choose_color(t_wolf *wolf)
 	dist_tmp = wolf->distance;
 	if (wolf->side == 0)
 		return_color = (wolf->inc_x == 1) ? 0xa2bbff : 0xb080ee;
+		// return_color = (wolf->ray_vector_x < 1) ? 0xa2bbff : 0xb080ee;
 	else if (wolf->side == 1)
 		return_color = (wolf->inc_y == 1) ? 0xaf9dff : 0xbff0ff;
+		// return_color = (wolf->ray_vector_y < 1) ? 0xaf9dff : 0xbff0ff;
 	while (return_color > 0x000000 && dist_tmp > 0.0)
 	{
 		return_color = fade_color(return_color);
@@ -98,99 +100,127 @@ void					draw_wall(t_env *env, t_wolf *wolf, int pixel)
 	}
 }
 
-// void				shoot_yray(t_wolf *wolf)
-// {
-// 	double	wall_y;
-// 	double	wall_x;
-// 	double	distance;
-//
-// 	wall_y = wolf->pos_y;
-// 	wall_x = wolf->pos_x;
-// 	while (1 && wolf->map[(int)wall_y])
-// 	{
-// 		if (wolf->inc_y == 1)
-// 			if (wolf->map[(int)wall_y] & (0b1 << (int)wall_x))
-// 				break;
-// 		if (wolf->inc_y == -1)
-// 			if (wolf->map[(int)wall_y - 1] & (0b1 << (int)wall_x))
-// 				break;
-// 		wall_y = (int)wall_y + wolf->inc_y;
-// 		wall_x = (wall_y - wolf->y_int) / wolf->slope;
-// 		if (wall_x > wolf->map_choice)
-// 			wall_x = wolf->map_choice;
-// 		else if (wall_x < 0)
-// 			wall_x = 0;
-// 	}
-// 	distance = sqrt(powf(wall_x - wolf->pos_x, 2.0) + powf(wall_y - wolf->pos_y, 2.0));
-// 	if (distance < wolf->distance)
-// 	{
-// 		wolf->distance = distance;
-// 		wolf->side = 1;
-// 	}
-// }
-//
-// void				shoot_xray(t_wolf *wolf)
-// {
-// 	double 	wall_x;
-// 	double	wall_y;
-//
-// 	wall_y = wolf->pos_y;
-// 	wall_x = wolf->pos_x;
-// 	while (1 && wolf->map[(int)wall_y])
-// 	{
-// 		if (wolf->inc_x == 1)
-// 			if (wolf->map[(int)wall_y] & (0b1 << (int)wall_x))
-// 				break;
-// 		if (wolf->inc_x == -1)
-// 			if (wolf->map[(int)wall_y] & (0b1 << ((int)wall_x - 1)))
-// 				break;
-// 		wall_x = (int)wall_x + wolf->inc_x;
-// 		wall_y = (wolf->slope * wall_x) + wolf->y_int;
-// 		if (wall_y > 14.0)
-// 			wall_y = 14.0;
-// 		else if (wall_y < 0)
-// 			wall_y = 0;
-// 	}
-// 	wolf->distance = sqrt(powf(wall_x - wolf->pos_x, 2.0) + powf(wall_y - wolf->pos_y, 2.0));
-// 	wolf->side = 0;
-// }
-
-void					shoot_ray(t_wolf *wolf)
+void				shoot_yray(t_wolf *wolf)
 {
-	double	wall_x;
 	double	wall_y;
+	double	wall_x;
+	double	distance;
 
-	wall_x = wolf->pos_x;
 	wall_y = wolf->pos_y;
+	wall_x = wolf->pos_x;
 	while (1 && wolf->map[(int)wall_y])
 	{
-		if (wolf->map[(int)wall_y] & (0b1 << (int)wall_x))
-			break;
-		if (wolf->ray_vector_x < 1)
-			wall_x = (wolf->ray_vector_x)
-		else
-			wall_x =
-		if (wolf->ray_vector_y < 1)
-			wall_y =
-		else
-			wall_y =
+		if (wolf->inc_y == 1)
+			if (wolf->map[(int)wall_y] & (0b1 << (int)wall_x))
+				break;
+		if (wolf->inc_y == -1)
+			if (wolf->map[(int)wall_y - 1] & (0b1 << (int)wall_x))
+				break;
+		wall_y = (int)wall_y + wolf->inc_y;
+		wall_x = (wall_y - wolf->y_int) / wolf->slope;
+		if (wall_x > wolf->map_choice)
+			wall_x = wolf->map_choice;
+		else if (wall_x < 0)
+			wall_x = 0;
+	}
+	distance = sqrt(powf(wall_x - wolf->pos_x, 2.0) + powf(wall_y - wolf->pos_y, 2.0));
+	if (distance < wolf->distance)
+	{
+		wolf->distance = distance;
+		wolf->side = 1;
 	}
 }
 
+void				shoot_xray(t_wolf *wolf)
+{
+	double 	wall_x;
+	double	wall_y;
+
+	wall_y = wolf->pos_y;
+	wall_x = wolf->pos_x;
+	while (1 && wolf->map[(int)wall_y])
+	{
+		if (wolf->inc_x == 1)
+			if (wolf->map[(int)wall_y] & (0b1 << (int)wall_x))
+				break;
+		if (wolf->inc_x == -1)
+			if (wolf->map[(int)wall_y] & (0b1 << ((int)wall_x - 1)))
+				break;
+		wall_x = (int)wall_x + wolf->inc_x;
+		wall_y = (wolf->slope * wall_x) + wolf->y_int;
+		if (wall_y > 14.0)
+			wall_y = 14.0;
+		else if (wall_y < 0)
+			wall_y = 0;
+	}
+	wolf->distance = sqrt(powf(wall_x - wolf->pos_x, 2.0) + powf(wall_y - wolf->pos_y, 2.0));
+	wolf->side = 0;
+}
+
+// void					shoot_ray(t_wolf *wolf)
+// {
+// 	double	y_segment;
+// 	double	x_segment;
+// 	int		map_x;
+// 	int		map_y;
+//
+// 	map_x = (int)wolf->pos_x;
+// 	map_y = (int)wolf->pos_y;
+// 	y_segment = sqrt(1 + (wolf->ray_vector_x * wolf->ray_vector_x) / (wolf->ray_vector_y * wolf->ray_vector_y));
+// 	x_segment = sqrt(1 + (wolf->ray_vector_y * wolf->ray_vector_y) / (wolf->ray_vector_x * wolf->ray_vector_x));
+// 	while (1 && wolf->map[map_y])
+// 	{
+// 		if (wolf->map[map_y] & (0b1 << map_x))
+// 			break;
+// 		if (wolf->ray_x < wolf->ray_y)
+// 		{
+// 			wolf->ray_x += x_segment;
+// 			map_x += wolf->inc_x;
+// 			wolf->side = 0;
+// 		}
+// 		else
+// 		{
+// 			wolf->ray_y += y_segment;
+// 			map_y += wolf->inc_y;
+// 			wolf->side = 1;
+// 		}
+// 		// printf("map_x %d, map_y %d\n", map_x, map_y);
+// 	}
+// 	// wolf->distance = sqrt(powf((double)map_x - wolf->pos_x, 2.0) + powf((double)map_y - wolf->pos_y, 2.0));
+// 	if (wolf->side == 0)
+// 		wolf->distance = (map_x - wolf->pos_x + (1 - wolf->inc_x) / 2) / wolf->ray_vector_x;
+// 	else
+// 		wolf->distance = (map_y - wolf->pos_y + (1 - wolf->inc_y) / 2) / wolf->ray_vector_y;
+// 	printf("%f\n", wolf->distance);
+// }
+
 void					aim_ray(t_wolf *wolf, int pixel)
 {
+	// double	x_segment;
+	// double	y_segment;
 	double	rotate_view;
 
 	rotate_view = ((2 * pixel) / (double)WIN_LEN) - 1;
+	// rotate_view = 2 * pixel / (double)WIN_LEN - 1;
 	wolf->ray_vector_x = wolf->vector_x + wolf->fov_x * rotate_view;
 	wolf->ray_vector_y = wolf->vector_y + wolf->fov_y * rotate_view;
 	wolf->inc_x = (wolf->ray_vector_x < 0) ? -1 : 1;
 	wolf->inc_y = (wolf->ray_vector_y < 0) ? -1 : 1;
-	// if ((wolf->pos_x + wolf->ray_vector_x) - wolf->pos_x == 0)
-	// 	wolf->slope = ((wolf->pos_y + wolf->ray_vector_y) - wolf->pos_y) / 0.0001;
+	if ((wolf->pos_x + wolf->ray_vector_x) - wolf->pos_x == 0)
+		wolf->slope = ((wolf->pos_y + wolf->ray_vector_y) - wolf->pos_y) / 0.0001;
+	else
+		wolf->slope = ((wolf->pos_y + wolf->ray_vector_y) - wolf->pos_y) / ((wolf->pos_x + wolf->ray_vector_x) - wolf->pos_x);
+	wolf->y_int = -(wolf->slope * wolf->pos_x) + wolf->pos_y;
+	// x_segment = sqrt(1 + (wolf->ray_vector_x * wolf->ray_vector_x) / (wolf->ray_vector_y * wolf->ray_vector_y));
+	// y_segment = sqrt(1 + (wolf->ray_vector_y * wolf->ray_vector_y) / (wolf->ray_vector_x * wolf->ray_vector_x));
+	// if (wolf->ray_vector_x < 0)
+	// 	wolf->ray_x = (wolf->pos_x - (int)wolf->pos_x) * x_segment;
 	// else
-	// 	wolf->slope = ((wolf->pos_y + wolf->ray_vector_y) - wolf->pos_y) / ((wolf->pos_x + wolf->ray_vector_x) - wolf->pos_x);
-	// wolf->y_int = -(wolf->slope * wolf->pos_x) + wolf->pos_y;
+	// 	wolf->ray_x = ((int)wolf->pos_x + 1.0 - wolf->pos_x) * x_segment;
+	// if (wolf->ray_vector_y < 0)
+	// 	wolf->ray_y = (wolf->pos_y - (int)wolf->pos_y) * y_segment;
+	// else
+	// 	wolf->ray_y = ((int)wolf->pos_y + 1.0 - wolf->pos_y) * y_segment;
 }
 
 void					ray_init(t_wolf *wolf)
@@ -225,10 +255,11 @@ void					raycaster(t_env *env, t_wolf *wolf)
 		ray_init(wolf);
 	while (pixel < (WIN_LEN - 1))
 	{
+		// printf("%d\n", pixel);
 		aim_ray(wolf, pixel);
-		shoot_ray(wolf);
-		// shoot_xray(wolf);
-		// shoot_yray(wolf);
+		// shoot_ray(wolf);
+		shoot_xray(wolf);
+		shoot_yray(wolf);
 		draw_wall(env, wolf, pixel);
 		pixel++;
 	}

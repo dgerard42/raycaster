@@ -83,7 +83,7 @@ void			handle_parameters(t_wolf *wolf, int argc, char **parameters)
 		else if (ft_strequ(parameters[1], "box"))
 			map_2(wolf);
 	}
-	printf("%d\n", argc);
+	// printf("%d\n", argc);
 	if (argc != 2 || wolf->map_choice == 42)
 	{
 		ft_putstr("Error. Invalid input.\n");
