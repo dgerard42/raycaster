@@ -34,8 +34,8 @@ void			minimap(t_wolf *wolf)
 		{
 			if ((int)wolf->pos_x == x && (int)wolf->pos_y == y)
 				ft_putstr(".X");
-			else if ((int)(wolf->pos_x + wolf->ray_vector_x) == x &&
-				(int)(wolf->pos_y + wolf->ray_vector_y) == y)
+			else if ((int)(wolf->pos_x + wolf->ray_vec_x) == x &&
+				(int)(wolf->pos_y + wolf->ray_vec_y) == y)
 				ft_putstr(".x");
 			else if (wolf->map[y] && wolf->map[y] & (0b1 << x))
 				ft_putstr("##");
@@ -46,10 +46,6 @@ void			minimap(t_wolf *wolf)
 		ft_putchar('\n');
 		y++;
 	}
-	ft_printf("player position = (%d, %d)\n", (int)wolf->pos_x,
-		(int)wolf->pos_y);
-	ft_printf("view vector = (%d, %d)\n", (int)wolf->pos_x +
-		(int)wolf->ray_vector_x, (int)wolf->pos_y + (int)wolf->ray_vector_y);
 }
 
 void			reinit(t_env *env, t_wolf *wolf)
@@ -60,16 +56,22 @@ void			reinit(t_env *env, t_wolf *wolf)
 	if (env->reinit == true)
 		mlx_destroy_image(env->mlx, env->image);
 	else
-		env->window = mlx_new_window(env->mlx, WIN_LEN, WIN_HI, "welcome to hell");
-	env->image = mlx_xpm_file_to_image(env->mlx, "./support_files/stars_1201_800.xpm", &len, &hi);
-	env->pixels = (int *)mlx_get_data_addr(env->image, &env->bits_per_pixel, &env->size_line, &env->endian);
+		env->window = mlx_new_window(env->mlx, WIN_LEN, WIN_HI, "starry");
+	env->image = mlx_xpm_file_to_image(env->mlx,
+		"./support_files/stars_1201_800.xpm", &len, &hi);
+	env->pixels = (int *)mlx_get_data_addr(env->image, &env->bits_per_pixel,
+		&env->size_line, &env->endian);
 	raycaster(env, wolf);
 	mlx_put_image_to_window(env->mlx, env->window, env->image, 0, 0);
 	if (wolf->minimap == true)
+	{
 		minimap(wolf);
+		ft_printf("player position = (%d, %d)\n", (int)wolf->pos_x,
+			(int)wolf->pos_y);
+		ft_printf("view vector = (%d, %d)\n", (int)wolf->pos_x +
+			(int)wolf->ray_vec_x, (int)wolf->pos_y + (int)wolf->ray_vec_y);
+	}
 }
-
-
 
 void			handle_parameters(t_wolf *wolf, int argc, char **parameters)
 {
@@ -83,7 +85,6 @@ void			handle_parameters(t_wolf *wolf, int argc, char **parameters)
 		else if (ft_strequ(parameters[1], "box"))
 			map_2(wolf);
 	}
-	// printf("%d\n", argc);
 	if (argc != 2 || wolf->map_choice == 42)
 	{
 		ft_putstr("Error. Invalid input.\n");
@@ -98,14 +99,12 @@ int				main(int argc, char **argv)
 	t_env	env;
 	t_wolf	wolf;
 
-	if (argc != 2)
-		return(0);
-	env.mlx = mlx_init();
 	handle_parameters(&wolf, argc, argv);
+	env.mlx = mlx_init();
 	env.wolf_mem = &wolf;
 	env.reinit = false;
 	wolf.minimap = false;
-	// system("afplay ./support_files/alien_pollen.mp3&");
+	system("afplay ./support_files/alien_pollen.mp3&");
 	reinit(&env, &wolf);
 	welcome_user();
 	mlx_hook(env.window, 2, 0, key_controls, (void *)&env);

@@ -18,13 +18,11 @@
 # include "minilibx/mlx.h"
 # include <stdbool.h>
 # include <math.h>
-# include <stdio.h>
 
 # define WIN_HI		800
 # define WIN_LEN	1201
 # define WOLF		(env->wolf_mem)
 # define SPEED		0.1
-
 
 # define KEY_ESC	53
 # define KEY_W		13
@@ -39,12 +37,12 @@ typedef	struct		s_wolf
 	unsigned long	*map;
 	double			pos_x;
 	double			pos_y;
-	double			vector_x;
-	double			vector_y;
+	double			vec_x;
+	double			vec_y;
 	double			fov_x;
 	double			fov_y;
-	double			ray_vector_x;
-	double			ray_vector_y;
+	double			ray_vec_x;
+	double			ray_vec_y;
 	double			ray_x;
 	double			ray_y;
 	int				inc_x;
@@ -76,5 +74,6 @@ void				welcome_user(void);
 void				map_0(t_wolf *wolf);
 void				map_1(t_wolf *wolf);
 void				map_2(t_wolf *wolf);
+void				draw_wall(t_env*env, t_wolf *wolf, int pixel);
 
 #endif

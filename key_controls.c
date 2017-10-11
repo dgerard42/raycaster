@@ -17,7 +17,7 @@ void				exit_wolf3d(t_env *env)
 	mlx_destroy_image(env->mlx, env->image);
 	mlx_destroy_window(env->mlx, env->window);
 	ft_memdel((void **)&WOLF->map);
-	// system("killall afplay");
+	system("killall afplay");
 	exit(0);
 }
 
@@ -25,48 +25,48 @@ void				movement_controls(t_env *env, int keycode)
 {
 	if (keycode == KEY_W)
 	{
-		if (!(WOLF->map[(int)(WOLF->pos_y + (WOLF->vector_y * 2))] & (0b1 << (int)(WOLF->pos_x + (WOLF->vector_x * 2)))))
+		if (!(WOLF->map[(int)(WOLF->pos_y + (WOLF->vec_y * 1))] &
+			(0b1 << (int)(WOLF->pos_x + (WOLF->vec_x * 1)))))
 		{
-			WOLF->pos_x += WOLF->vector_x * SPEED;
-			WOLF->pos_y += WOLF->vector_y * SPEED;
+			WOLF->pos_x += WOLF->vec_x * SPEED;
+			WOLF->pos_y += WOLF->vec_y * SPEED;
 		}
 	}
 	else if (keycode == KEY_S)
 	{
-		if (!(WOLF->map[(int)(WOLF->pos_y - (WOLF->vector_y * 2))] & (0b1 << (int)(WOLF->pos_x - (WOLF->vector_x * 2)))))
+		if (!(WOLF->map[(int)(WOLF->pos_y - (WOLF->vec_y * 1))] &
+			(0b1 << (int)(WOLF->pos_x - (WOLF->vec_x * 1)))))
 		{
-			WOLF->pos_x -= WOLF->vector_x * SPEED;
-			WOLF->pos_y -= WOLF->vector_y * SPEED;
+			WOLF->pos_x -= WOLF->vec_x * SPEED;
+			WOLF->pos_y -= WOLF->vec_y * SPEED;
 		}
 	}
-
 }
 
 void				rotation_controls(t_env *env, int keycode)
 {
-	double	vector_x_tmp;
+	double	vec_x_tmp;
 	double	fov_x_tmp;
 
 	if (keycode == KEY_D)
 	{
-		vector_x_tmp = WOLF->vector_x;
-		WOLF->vector_x = (WOLF->vector_x * cos(-0.1)) - (WOLF->vector_y * sin(-0.1));
-		WOLF->vector_y = (vector_x_tmp * sin(-0.1)) + (WOLF->vector_y * cos(-0.1));
+		vec_x_tmp = WOLF->vec_x;
+		WOLF->vec_x = (WOLF->vec_x * cos(-0.1)) - (WOLF->vec_y * sin(-0.1));
+		WOLF->vec_y = (vec_x_tmp * sin(-0.1)) + (WOLF->vec_y * cos(-0.1));
 		fov_x_tmp = WOLF->fov_x;
 		WOLF->fov_x = (WOLF->fov_x * cos(-0.1)) - (WOLF->fov_y * sin(-0.1));
 		WOLF->fov_y = (fov_x_tmp * sin(-0.1)) + (WOLF->fov_y * cos(-0.1));
 	}
 	else if (keycode == KEY_A)
 	{
-		vector_x_tmp = WOLF->vector_x;
-		WOLF->vector_x = (WOLF->vector_x * cos(0.1)) - (WOLF->vector_y * sin(0.1));
-		WOLF->vector_y = (vector_x_tmp * sin(0.1)) + (WOLF->vector_y * cos(0.1));
+		vec_x_tmp = WOLF->vec_x;
+		WOLF->vec_x = (WOLF->vec_x * cos(0.1)) - (WOLF->vec_y * sin(0.1));
+		WOLF->vec_y = (vec_x_tmp * sin(0.1)) + (WOLF->vec_y * cos(0.1));
 		fov_x_tmp = WOLF->fov_x;
 		WOLF->fov_x = (WOLF->fov_x * cos(0.1)) - (WOLF->fov_y * sin(0.1));
 		WOLF->fov_y = (fov_x_tmp * sin(0.1)) + (WOLF->fov_y * cos(0.1));
 	}
 }
-
 
 int					key_controls(int keycode, t_env *env)
 {

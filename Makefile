@@ -18,6 +18,7 @@ SRCS =	main.c\
 		raycaster.c\
 		key_controls.c\
 		maps.c\
+		draw_maze.c\
 
 LIBFT =	libft/ft_atoi.c\
 		libft/ft_memdel.c\
