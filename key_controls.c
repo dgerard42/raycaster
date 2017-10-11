@@ -12,13 +12,14 @@
 
 #include "wolf3d.h"
 
-void				exit_wolf3d(t_env *env)
+int					exit_wolf3d(t_env *env)
 {
 	mlx_destroy_image(env->mlx, env->image);
 	mlx_destroy_window(env->mlx, env->window);
 	ft_memdel((void **)&WOLF->map);
 	system("killall afplay");
 	exit(0);
+	return (0);
 }
 
 void				movement_controls(t_env *env, int keycode)
@@ -66,6 +67,16 @@ void				rotation_controls(t_env *env, int keycode)
 		WOLF->fov_x = (WOLF->fov_x * cos(0.1)) - (WOLF->fov_y * sin(0.1));
 		WOLF->fov_y = (fov_x_tmp * sin(0.1)) + (WOLF->fov_y * cos(0.1));
 	}
+}
+
+int				red_button(int keycode, t_env *env)
+{
+	(void)keycode;
+	(void)env;
+
+	system("killall afplay");
+	exit(0);
+	return (0);
 }
 
 int					key_controls(int keycode, t_env *env)

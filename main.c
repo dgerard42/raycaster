@@ -87,9 +87,10 @@ void			handle_parameters(t_wolf *wolf, int argc, char **parameters)
 	}
 	if (argc != 2 || wolf->map_choice == 42)
 	{
-		ft_putstr("Error. Invalid input.\n");
+		ft_putstr("Error, invalid input. Choose a map.\n");
 		ft_putstr("Usage:  [blox] = some pillars n blox\n\t");
 		ft_putstr("[maze] = a stupid maze\n\t[box] = big ass box\n");
+		ft_memdel((void **)&wolf->map);
 		exit(0);
 	}
 }
@@ -108,6 +109,7 @@ int				main(int argc, char **argv)
 	reinit(&env, &wolf);
 	welcome_user();
 	mlx_hook(env.window, 2, 0, key_controls, (void *)&env);
+	mlx_hook(env.window, 17, 0, red_button, (void *)&env);
 	mlx_loop(env.mlx);
 	return (0);
 }

@@ -75,5 +75,6 @@ void				map_0(t_wolf *wolf);
 void				map_1(t_wolf *wolf);
 void				map_2(t_wolf *wolf);
 void				draw_wall(t_env*env, t_wolf *wolf, int pixel);
+int					red_button(int keycode, t_env *env);
 
 #endif
