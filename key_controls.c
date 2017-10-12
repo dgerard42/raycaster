@@ -69,11 +69,10 @@ void				rotation_controls(t_env *env, int keycode)
 	}
 }
 
-int				red_button(int keycode, t_env *env)
+int					red_button(int keycode, t_env *env)
 {
 	(void)keycode;
 	(void)env;
-
 	system("killall afplay");
 	exit(0);
 	return (0);
